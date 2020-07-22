@@ -63,4 +63,13 @@ typedef struct
 	
 } S_BOARD;;
 
+/*Macros*/
+#define FR2SQ(f,r) ( (21 + (f)) + ((r)*10))		//When given a file and rank, this returns 120 board based index number.
+
+/*Functions*/
+
+/*Globals*/
+extern int Sq120ToSq64[BRD_SQ_NUM];	//Converts 120 index board position to 64 index boar position.
+extern int Sq64ToSq120[64];			//Converts 64 index board position to 120 index board position.
+
 #endif
