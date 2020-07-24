@@ -1,6 +1,24 @@
 #ifndef DEFS_H
 #define DEFS_H
 
+#include "stdlib.h"
+
+#define DEBUG
+
+//TODO : Translate the following C macro into C++ style.
+#ifndef DEBUG
+#define ASSERT(n)
+#else
+#define ASSERT(n) \
+if (!(n)){	\
+		printf("%s - Failed", #n); \
+		printf("On %s ", __DATE__); \
+		printf("At %s ", __TIME__); \
+		printf("In File %s ", __FILE__); \
+		printf("At Line %d\n", __LINE__); \
+		exit(1);}
+#endif
+
 typedef unsigned long long U64;
 
 #define NAME "Ajastra 1.0"
@@ -42,24 +60,33 @@ typedef struct
 typedef struct
 {
 	int pieces[BRD_SQ_NUM];
-	U64 pawns[3];				//00000000 - 8 0s indicating 8 squares on row. Where there is a pawn, bit is set to 1, if not 0.
-	int KingSq[3];				//Squares on which Kings are
+	U64 pawns[3];				//00000000 - 8 0s indicating 8 squares on row.
+								//Where there is a pawn, bit is set to 1, if not 0.
+								//Represent WHITE, BLACK and BOTH.
+								//Pawns are already represented in pieces[] above but
+								//when finding ranks, evaluating position etc. looking
+								//at pawns on their own will be much easier and faster.
+								
+	int KingSq[2];				//Squares on which Kings are
 	int side;					//Side to move
 	int enPass;					//En-passant square (active)
 	int fiftyMovesTracker;		//Counter to trace fifty moves rule
 
 	int ply;					//Indicates half moves in current search
-	int hisPly;					//Total half moves in the past. Required to trace threefold repetition.
+	int histPly;				//Total half moves in the past. Required to trace threefold repetition.
 
 	int castlePerm;				//Indicates castling permissions
 
-	U64 posKey;					//
-	int pceNum[13];				//
-	int bigPce[3];				//All pieces (no pawns)
-	int majPce[4];				//
-	int minPce[3];				//
+	U64 posKey;					//Unique key generated for each position
+	int pceNum[13];				//Number of pieces on board, indexed by piece type (wP, wN, wB, wR, wQ, wK, bP, wN, wB, wR, wQ)
+
+	int bigPce[3];				//All pieces except pawns
+	int majPce[3];				//Rooks and Queens (white, black, both)
+	int minPce[3];				//Bishops and Knights (white, black, both)
 
 	S_UNDO history[MAXGAMEMOVES];
+
+	int pList[13][10];			//For each piece type (wP/bP/wR/bR etc.) there can be 10 instances present on the board (promotion included.
 	
 } S_BOARD;;
 

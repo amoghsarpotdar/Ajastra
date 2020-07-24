@@ -6,10 +6,18 @@
 #include "Init.h"
 
 int main(){
+	
 	init _initializer;
 	_initializer.AllInit();
 	int index = 0;
-	
+
+	//Testing ASSERT macro in defs.h. Remember to #define DEBUG.
+	//TODO : Move this into a unit test.
+	//int num = 4;
+	//ASSERT(index == num);
+
+	//Testing the board printing mechanism.
+	//TODO : Move this into a unit test.
 	for(index=0; index<BRD_SQ_NUM;++index)
 	{
 		if (index % 10 == 0)
