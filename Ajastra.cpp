@@ -13,7 +13,6 @@ int main(){
 }
 
 /**************************TESTS***********************************/
-
 void TestClearMaskForGivenSquare()
 {
 	init _initializer;

@@ -110,7 +110,19 @@ Important c++ concepts you will have to know to be able to understand/modify thi
 Read more about this at - https://stackoverflow.com/questions/17795722/what-is-the-meaning-of-1ullin-c-programming-language
 and at https://stackoverflow.com/questions/17287680/literal-types-0x1ull-vs-0x1llu/17287767#17287767
 and at https://stackoverflow.com/questions/17287957/is-long-unsigned-as-valid-as-unsigned-long-in-c
-
+4. How are position keys generated?
+-> The C library rand() is being used to generate random number.
+A 64bit value will be represented in memory as below -
+<-4-><------15-----> <------15-----> <------15-----> <-----15------>
+0000 000000000000000 000000000000000 000000000000000 000000000000000
+The rnd function will generate 15 bit value, which means only the 15 bits will be occupied to reflect the value.
+<-4-><------15-----> <------15-----> <------15-----> <-----15------>
+0000 000000000000000 000000000000000 000000000000000 111111111111111
+The RAND_64 function in init.h is using left shift operations to generate the random number and
+left shift it into the 64bit at each step. Thus after four steps it will occupy 60 bits as shown beow
+<-4-><------15-----> <------15-----> <------15-----> <-----15------>
+0000 111111111111111 111111111111111 111111111111111 111111111111111
+The final step will deal with remaining bits.
 
 
 What needs to change in this implementation:
@@ -119,4 +131,5 @@ not complete and you will notice elements from C hanging around, which need to b
 migrated to C++.
 2. Bitboard implementation is not 100%. Only pawns are being represented using binary
 arrays. For a faster and precise operation bitboard implementation needs to be perfected.
+
 

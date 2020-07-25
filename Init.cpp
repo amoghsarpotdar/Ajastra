@@ -10,7 +10,27 @@ void init::AllInit()
 {
 	InitSq120To64();
 	InitBitMasks();
+	InitHashKeys();
 }
+
+void init::InitHashKeys()
+{
+	int index = 0;
+	int index2 = 0;
+	for(index=0;index<13;++index)
+	{
+		for(index2=0;index2<120;++index2)
+		{
+			PieceKeys[index][index2] = RAND_64;
+		}
+	}
+	sideKey = RAND_64;
+	for(index=0;index<16;++index)
+	{
+		castleKeys[index] = RAND_64;
+	}
+}
+
 
 void init::InitBitMasks()
 {

@@ -24,6 +24,9 @@
     <ClCompile Include="bitboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="positionkeyprocessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="defs.h">
@@ -33,6 +36,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="bitboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="positionkeyprocessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

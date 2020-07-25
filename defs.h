@@ -77,7 +77,7 @@ typedef struct
 
 	int castlePerm;				//Indicates castling permissions
 
-	U64 posKey;					//Unique key generated for each position
+	U64 posKey;					//Unique key generated for each position. Useful to track repetitions in position.
 	int pceNum[13];				//Number of pieces on board, indexed by piece type (wP, wN, wB, wR, wQ, wK, bP, wN, wB, wR, wQ)
 
 	int bigPce[3];				//All pieces except pawns
@@ -99,8 +99,12 @@ typedef struct
 /*Functions*/
 
 /*Globals*/
-extern int Sq120ToSq64[BRD_SQ_NUM];	//Converts 120 index board position to 64 index boar position.
-extern int Sq64ToSq120[64];			//Converts 64 index board position to 120 index board position.
-extern U64 SetMask[64];				//
-extern U64 ClearMask[64];			//
+extern int Sq120ToSq64[BRD_SQ_NUM];					//Converts 120 index board position to 64 index boar position.
+extern int Sq64ToSq120[64];							//Converts 64 index board position to 120 index board position.
+extern U64 SetMask[64];								//
+extern U64 ClearMask[64];							//
+
+extern U64 PieceKeys[13][120];						//Dimension[0] is for piece, dimension[1] is for the square
+extern U64 sideKey;									//
+extern U64 castleKeys[16];							//Four bits to represent 4 castling ways (2 ways for each side).
 #endif

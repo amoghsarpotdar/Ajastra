@@ -150,11 +150,13 @@
     <ClCompile Include="Ajastra.cpp" />
     <ClCompile Include="bitboard.cpp" />
     <ClCompile Include="Init.cpp" />
+    <ClCompile Include="positionkeyprocessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitboard.h" />
     <ClInclude Include="defs.h" />
     <ClInclude Include="Init.h" />
+    <ClInclude Include="positionkeyprocessor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
