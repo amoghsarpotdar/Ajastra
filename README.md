@@ -105,7 +105,11 @@ Important c++ concepts you will have to know to be able to understand/modify thi
 	1f. bitwise NOT : Takes one number and inverts all bits of it.
 2. Why bitwise operations and not standard c++ operators?
 -> https://softwareengineering.stackexchange.com/questions/13798/what-are-the-advantages-of-using-bitwise-operations#:~:text=This%20means%20making%20extensive%20use,into%20the%20payload%20being%20transmitted.&text=Basically%2C%20you%20use%20them%20due,usually%20faster%20than%20arithmetic%20operations.
-
+3. Whats 1ULL?
+-> Unsigned long long
+Read more about this at - https://stackoverflow.com/questions/17795722/what-is-the-meaning-of-1ullin-c-programming-language
+and at https://stackoverflow.com/questions/17287680/literal-types-0x1ull-vs-0x1llu/17287767#17287767
+and at https://stackoverflow.com/questions/17287957/is-long-unsigned-as-valid-as-unsigned-long-in-c
 
 
 

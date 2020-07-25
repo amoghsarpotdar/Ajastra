@@ -7,8 +7,58 @@
 #include "bitboard.h"
 
 int main(){
+
+		
 	
 	return 0;
+}
+
+/**************************TESTS***********************************/
+void TestPopBitboardFunctionV2()
+{
+	init _initializer;
+	bitboard board;
+	_initializer.AllInit();
+
+	U64 playBitBoard = 0ULL;
+
+	playBitBoard |= (1ULL << SQ64(D2));
+	playBitBoard |= (1ULL << SQ64(D3));
+	playBitBoard |= (1ULL << SQ64(D4));
+
+	int sq64 = 0;
+
+	while (playBitBoard)
+	{
+		sq64 = board.PopBit(&playBitBoard);
+		printf("Popped: %d\n", sq64);
+		board.PrintBitBoard(playBitBoard);
+	}
+}
+
+void TestPopBitBoardFunction()
+{
+	init _initializer;
+	_initializer.AllInit();
+
+	U64 playBitBoard = 0ULL;
+
+	playBitBoard |= (1ULL << SQ64(D2));
+	playBitBoard |= (1ULL << SQ64(D3));
+	playBitBoard |= (1ULL << SQ64(D4));
+
+	printf("\n");
+	bitboard board;
+	board.PrintBitBoard(playBitBoard);
+
+	int count = board.CountBits(playBitBoard);
+	printf("Count: %d\n", count);
+
+	int index = board.PopBit(&playBitBoard);
+	printf("index:%d\n", index);
+	board.PrintBitBoard(playBitBoard);
+	count = board.CountBits(playBitBoard);
+	printf("Count: %d\n", count);
 }
 
 void TestPawnBitBoard()
@@ -75,7 +125,7 @@ void TestAssertMacro()
 	int num = 4;
 	ASSERT(index == num);
 }
-
+/**************************TESTS***********************************/
 
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
