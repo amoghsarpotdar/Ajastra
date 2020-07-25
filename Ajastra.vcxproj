@@ -148,9 +148,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ajastra.cpp" />
+    <ClCompile Include="bitboard.cpp" />
     <ClCompile Include="Init.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bitboard.h" />
     <ClInclude Include="defs.h" />
     <ClInclude Include="Init.h" />
   </ItemGroup>

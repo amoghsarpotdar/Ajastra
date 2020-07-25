@@ -60,7 +60,7 @@ typedef struct
 typedef struct
 {
 	int pieces[BRD_SQ_NUM];
-	U64 pawns[3];				//00000000 - 8 0s indicating 8 squares on row.
+	U64 pawns[3];				//00000000 - 8 0s indicating 8 squares on row. Note that this is unsigned 64 bit value.
 								//Where there is a pawn, bit is set to 1, if not 0.
 								//Represent WHITE, BLACK and BOTH.
 								//Pawns are already represented in pieces[] above but
@@ -92,7 +92,7 @@ typedef struct
 
 /*Macros*/
 #define FR2SQ(f,r) ( (21 + (f)) + ((r)*10))		//When given a file and rank, this returns 120 board based index number.
-
+#define SQ64(sq120) Sq120ToSq64[sq120]			//Shortcut to Sq120ToSq64 defined in globals below, defined for convenience.
 /*Functions*/
 
 /*Globals*/

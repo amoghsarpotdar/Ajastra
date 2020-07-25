@@ -4,9 +4,37 @@
 #include <iostream>
 #include "defs.h"
 #include "Init.h"
+#include "bitboard.h"
 
 int main(){
 	
+	return 0;
+}
+
+void TestPawnBitBoard()
+{
+	init _initializer;
+	_initializer.AllInit();
+
+	U64 playBitBoard = 0ULL;
+
+	printf("start:\n\n");
+	bitboard board;
+	board.PrintBitBoard(playBitBoard);
+
+	//Add a pawn to D2.
+	playBitBoard |= (1ULL << SQ64(D2));
+	printf("D2 Added:\n\n");
+	board.PrintBitBoard(playBitBoard);
+
+	//Add a pawn to G2.
+	playBitBoard |= (1ULL << SQ64(G2));
+	printf("G2 Added:\n\n");
+	board.PrintBitBoard(playBitBoard);
+}
+
+void TestBoardPrintingMechanism()
+{
 	init _initializer;
 	_initializer.AllInit();
 	int index = 0;
@@ -18,14 +46,14 @@ int main(){
 
 	//Testing the board printing mechanism.
 	//TODO : Move this into a unit test.
-	for(index=0; index<BRD_SQ_NUM;++index)
+	for (index = 0; index < BRD_SQ_NUM; ++index)
 	{
 		if (index % 10 == 0)
 			std::cout << "\n";
-		
+
 		printf("%5d", Sq120ToSq64[index]);
 	}
-	
+
 	printf("\n");
 	printf("\n");
 
@@ -37,6 +65,18 @@ int main(){
 		printf("%5d", Sq64ToSq120[index]);
 	}
 }
+
+void TestAssertMacro()
+{
+	int index = 0;
+
+	//Testing ASSERT macro in defs.h. Remember to #define DEBUG.
+	//TODO : Move this into a unit test.
+	int num = 4;
+	ASSERT(index == num);
+}
+
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
