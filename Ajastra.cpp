@@ -8,12 +8,50 @@
 
 int main(){
 
-		
 	
 	return 0;
 }
 
 /**************************TESTS***********************************/
+
+void TestClearMaskForGivenSquare()
+{
+	init _initializer;
+	bitboard board;
+	_initializer.AllInit();
+	bitboard bitboard;
+
+	int index = 0;
+	U64 playBitBoad = 0ULL;
+
+	for (index = 0; index < 64; index++)
+	{
+		printf("Index: %d", index);
+		board.PrintBitBoard(ClearMask[index]);
+		printf("\n");
+	}
+}
+
+void TestSetMaskSetsBitForGivenSquare()
+{
+	init _initializer;
+	bitboard board;
+	_initializer.AllInit();
+	bitboard bitboard;
+
+	int index = 0;
+	U64 playBitBoad = 0ULL;
+
+	for (index = 0; index < 64; index++)
+	{
+		printf("Index: %d", index);
+		board.PrintBitBoard(SetMask[index]);
+		printf("\n");
+	}
+	SETBIT(playBitBoad, 61);
+	board.PrintBitBoard(SetMask[index]);
+}
+
 void TestPopBitboardFunctionV2()
 {
 	init _initializer;

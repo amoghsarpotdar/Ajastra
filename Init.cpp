@@ -3,10 +3,36 @@
 int Sq120ToSq64[BRD_SQ_NUM];
 int Sq64ToSq120[64];
 
+U64 SetMask[64];
+U64 ClearMask[64];
+
 void init::AllInit()
 {
 	InitSq120To64();
+	InitBitMasks();
 }
+
+void init::InitBitMasks()
+{
+	int index = 0;
+
+	//This initializes the bitmask arrays to default 0ULL value.
+	for(index=0; index<64; index++)
+	{
+		SetMask[index] = 0ULL;
+		ClearMask[index] = 0ULL;
+	}
+
+	//This initializes the SetMask and ClearMask arrays respectively.
+	for(index=0; index<64; index++)
+	{
+		//Uses the bitwise left shift to set 'index' square to 1
+		SetMask[index] |= (1ULL << index);
+		//Uses the bitwise NOT operation to set 'index' square to its opposite value (0 if it is 1 and otherwise)
+		ClearMask[index] = ~SetMask[index];
+	}
+}
+
 
 void init::InitSq120To64()
 {

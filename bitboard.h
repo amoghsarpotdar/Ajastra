@@ -19,6 +19,7 @@ private:
 	
 public:
 	void PrintBitBoard(U64 bb);
+	
 
 	//////////////////////////////
 	//More information available on chess programming wiki about the functions defined in this block.

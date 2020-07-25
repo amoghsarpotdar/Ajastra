@@ -91,12 +91,16 @@ typedef struct
 } S_BOARD;;
 
 /*Macros*/
-#define FR2SQ(f,r) ( (21 + (f)) + ((r)*10))		//When given a file and rank, this returns 120 board based index number.
-#define SQ64(sq120) Sq120ToSq64[sq120]			//Shortcut to Sq120ToSq64 defined in globals below, defined for convenience.
+#define FR2SQ(f,r) ( (21 + (f)) + ((r)*10))			//When given a file and rank, this returns 120 board based index number.
+#define SQ64(sq120) Sq120ToSq64[sq120]				//Shortcut to Sq120ToSq64 defined in globals below, defined for convenience.
+#define CLRBIT(bb, sq) ((bb) &= ClearMask[(sq)])	//Takes a bitboard, performs bitwise AND operation.
+#define SETBIT(bb, sq) ((bb) |= SetMask[(sq)])		//Takes a bitboard, performs exclusive OR operation.
+
 /*Functions*/
 
 /*Globals*/
 extern int Sq120ToSq64[BRD_SQ_NUM];	//Converts 120 index board position to 64 index boar position.
 extern int Sq64ToSq120[64];			//Converts 64 index board position to 120 index board position.
-
+extern U64 SetMask[64];				//
+extern U64 ClearMask[64];			//
 #endif

@@ -8,6 +8,7 @@ class init
 {
 public:
 	void AllInit();
+	void InitBitMasks();
 
 private:
 	void InitSq120To64();
