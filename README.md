@@ -133,3 +133,19 @@ migrated to C++.
 arrays. For a faster and precise operation bitboard implementation needs to be perfected.
 
 
+FEN Notation: More information is available here - https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
+->Example string : rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+Here:
+1. Small letters indicate black pieces.
+2. Capital letters indicate white pieces.
+3. The /8/8/8/8 indicate the vacant squares.
+4. 'w' indicates side to move.
+5. KQkq indicates castling rights for each side.
+6. The 0 indicates halfmove clock : Number of half moves since the last capture of pawn advance (fifty-move rule).
+7. Final digit (1 in this case) indicate number of full moves, starts with 1 and is incremented after Black's move.
+8. All piece placement is from White's perspective.
+->Example string after White's e4 : rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1
+Notice the third '/8' being replaced by 4P3 which indicates a white pawn on 4th file pawn (index starting with 0) moving to third row (index starting with 0).
+
+
+
