@@ -1,4 +1,16 @@
+#include <stdio.h>
 #include "Board.h"
+
+#include "positionkeyprocessor.h"
+
+U64 PieceKeys[13][120];						//Dimension[0] is for piece, dimension[1] is for the square
+U64 sideKey;								//
+U64 castleKeys[16];							//Four bits to represent 4 castling ways (2 ways for each side).
+
+char PceChar[] = ".PNBRQKpnbrqk";
+char SideChar[] = "wb-";
+char RankChar[] = "12345678";
+char FileChar[] = "abcdefgh";
 
 void Board::ResetBoard(S_BOARD* pos)
 {
@@ -44,7 +56,7 @@ void Board::ResetBoard(S_BOARD* pos)
 	pos->posKey = 0ULL;
 }
 
-int Board::Parse_Fen(char* fen, S_BOARD* pos)
+int Board::Parse_Fen(const char* fen, S_BOARD* pos)
 {
 	ASSERT(fen != NULL);
 	ASSERT(pos != NULL);
@@ -101,55 +113,94 @@ int Board::Parse_Fen(char* fen, S_BOARD* pos)
 			return -1;
 		}
 
-		for(i=0; i<count; i++)
+		for (i = 0; i < count; i++)
 		{
 			sq64 = rank * 8 + file;
 			sq120 = SQ120(sq64);
-			if(piece!=EMPTY)
+			if (piece != EMPTY)
 			{
 				pos->pieces[sq120] = piece;
 			}
 			file++;
 		}
+		fen++;
+	}
 
-		ASSERT(*fen == 'w' || *fen == 'b');
+	//At this point *fen should be pointing to the field [side to move] in FEN schema.
+	ASSERT(*fen == 'w' || *fen == 'b');
+	pos->side == (*fen == 'w') ? WHITE : BLACK;
+	fen += 2;
 
-		pos->side == (*fen == 'w') ? WHITE : BLACK;
-		fen += 2;
-
-		//Parse castling permissions.
-		for(i=0; i<4; i++)
+	//Parse castling permissions.
+	for (i = 0; i < 4; i++)
+	{
+		if (*fen == ' ') { break; }
+		switch (*fen)
 		{
-			if (*fen == ' ') { break; }
-			switch(*fen)
-			{
-				case 'K': pos->castlePerm |= WKCA; break;
-				case 'Q': pos->castlePerm |= WQCA; break;
-				case 'k': pos->castlePerm |= BKCA; break;
-				case 'q': pos->castlePerm |= BQCA; break;
-				default: break;
-			}
-			fen++;
+		case 'K': pos->castlePerm |= WKCA; break;
+		case 'Q': pos->castlePerm |= WQCA; break;
+		case 'k': pos->castlePerm |= BKCA; break;
+		case 'q': pos->castlePerm |= BQCA; break;
+		default: break;
 		}
 		fen++;
-
-		ASSERT(pos->castlePerm > 0 && pos->castlePerm <= 15);
-
-		if(*fen != '-')
-		{
-			file = fen[0] - 'a';	//??
-			rank = fen[1] - '1';	//??
-
-			ASSERT(file >= FILE_A && file <= FILE_H);
-			ASSERT(rank >= RANK_1 && rank <= RANK_8);
-
-			pos->enPass = FR2SQ(file, rank);
-		}
 	}
+	fen++;
+
+	ASSERT(pos->castlePerm > 0 && pos->castlePerm <= 15);
+
+	if (*fen != '-')
+	{
+		file = fen[0] - 'a';	//??
+		rank = fen[1] - '1';	//??
+
+		ASSERT(file >= FILE_A && file <= FILE_H);
+		ASSERT(rank >= RANK_1 && rank <= RANK_8);
+
+		pos->enPass = FR2SQ(file, rank);
+	}
+	
 	positionkeyprocessor posKeyProcessor;
 	pos->posKey = posKeyProcessor.GeneratePosKey(pos);
 
 	return 0;
+}
+
+void Board::PrintBoard(const S_BOARD* pos)
+{
+	int sq, file, rank, piece;
+
+	printf("\nGame Board:\n\n");
+
+	//Navigate through ranks, starting from 8th (because we want a1 square
+	//on our left.
+	for(rank=RANK_8; rank>= RANK_1; rank--)
+	{
+		printf("%d", rank + 1);
+		//Navigate through files, starting from A to H.
+		for (file = FILE_A; file <= FILE_H; file++) {
+			sq = FR2SQ(file, rank);
+			piece = pos->pieces[sq];
+			printf("%3c", PceChar[piece]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+
+	for(file=FILE_A; file<=FILE_H; file++)
+	{
+		printf("%3c", 'a' + file);
+	}
+	printf("\n");
+	printf("side:%c\n", SideChar[pos->side]);
+	printf("enPas:%c\n", pos->enPass);
+	//Print castling permissions.
+	printf("castle:%c%c%c%c\n",
+		pos->castlePerm & WKCA ? 'K' : '-',
+		pos->castlePerm & WQCA ? 'Q' : '-',
+		pos->castlePerm & BKCA ? 'k' : '-',
+		pos->castlePerm & BQCA ? 'q' : '-');
+	printf("PosKey:%llX\n", pos->posKey);
 }
 
 

@@ -1,5 +1,5 @@
+#include <cstdio>
 #include "bitboard.h"
-
 void bitboard::PrintBitBoard(U64 bb)
 {
 	U64 shiftMe = 1ULL;

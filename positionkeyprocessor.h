@@ -1,10 +1,7 @@
 #pragma once
-#ifndef _POSKEYPROC_H_
-#define _POSKEYPROC_H_
+#ifndef _POSITIONKEYPROCESSOR_H_
+#define _POSITIONKEYPROCESSOR_H_
 #include "defs.h"
-#include "bitboard.h"
-
-
 
 class positionkeyprocessor
 {
@@ -13,4 +10,3 @@ public:
 };
 
 #endif
-

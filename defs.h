@@ -1,7 +1,8 @@
-#ifndef DEFS_H_
-#define DEFS_H_
+#pragma once
+#ifndef _DEFS_H_
+#define _DEFS_H_
 
-#include "stdlib.h"
+#include <stdlib.h>
 
 #define DEBUG
 
@@ -11,7 +12,7 @@
 #else
 #define ASSERT(n) \
 if (!(n)){	\
-		printf("%s - Failed", #n); \
+		printf("%s - Failed ", #n); \
 		printf("On %s ", __DATE__); \
 		printf("At %s ", __TIME__); \
 		printf("In File %s ", __FILE__); \
@@ -27,6 +28,8 @@ typedef unsigned long long U64;
 #define MAXGAMEMOVES 2048
 
 #define START_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"		//FEN representation of initial position of a chess board.
+#define FEN2 "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"			//FEN representation of position after 1.e4. Used for testing only.
+#define FEN3 "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"		//FEN representation of position after 1.e4 c5. Used for testing only.
 
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK};
 enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE};
@@ -110,4 +113,10 @@ extern U64 ClearMask[64];							//
 extern U64 PieceKeys[13][120];						//Dimension[0] is for piece, dimension[1] is for the square
 extern U64 sideKey;									//
 extern U64 castleKeys[16];							//Four bits to represent 4 castling ways (2 ways for each side).
+
+extern char PceChar[];
+extern char SideChar[];
+extern char RankChar[];
+extern char FileChar[];
+
 #endif
