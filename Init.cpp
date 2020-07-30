@@ -40,7 +40,7 @@ void init::InitFilesRanksBrd()
 		}
 	}
 
-	printf("FilesBrd\n");
+	/*printf("FilesBrd\n");
 	for(index=0; index<BRD_SQ_NUM; ++index)
 	{
 		if (index % 10 == 0 && index != 0) printf("\n");
@@ -53,7 +53,7 @@ void init::InitFilesRanksBrd()
 	{
 		if (index % 10 == 0 && index != 0) printf("\n");
 		printf("%4d", RanksBrd[index]);
-	}
+	}*/
 }
 
 

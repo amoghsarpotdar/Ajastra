@@ -1,15 +1,32 @@
 // Ajastra.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include <cstdio>
+
+
+#include "bitboard.h"
 #include "Board.h"
 #include "Init.h"
 
 int main(){
 
 	init _initializer;
-	//bitboard _playbitboard;
-	Board _board;
+	Board theboard;
+	bitboard bitBoard;
+	S_BOARD board[1];
+
 	_initializer.AllInit();
+	theboard.Parse_Fen(FEN4, board);
+	theboard.UpdateListsMaterial(board);
+	theboard.PrintBoard(board);
+	printf("\nwP:\n");
+	bitBoard.PrintBitBoard(board->pawns[WHITE]);
+	printf("\nbP:\n");
+	bitBoard.PrintBitBoard(board->pawns[BLACK]);
+	printf("\nall:\n");
+	bitBoard.PrintBitBoard(board->pawns[BOTH]);
+	//theboard.PrintBoard(board->pawns[WHITE]);;
+
 	/*S_BOARD board[1];
 	_board.Parse_Fen(START_FEN, board);
 	_board.PrintBoard(board);
@@ -23,8 +40,18 @@ int main(){
 	return 0;
 }
 
+
+
 /**************************TESTS***********************************/
 /*
+
+void TestInitFilesRanksBrd()
+{
+	init _initializer;
+	Board _board;
+	_initializer.AllInit();
+}
+
 void TestClearMaskForGivenSquare()
 {
 	init _initializer;

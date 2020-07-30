@@ -173,6 +173,8 @@ int Board::Parse_Fen(const char* fen, S_BOARD* pos)
 	positionkeyprocessor posKeyProcessor;
 	pos->posKey = posKeyProcessor.GeneratePosKey(pos);
 
+	//TODO : Should we be calling the UpdateListsMaterial function over here?
+	//
 	return 0;
 }
 
@@ -236,6 +238,17 @@ void Board::UpdateListsMaterial(S_BOARD* pos)
 
 			if (piece == wK) pos->KingSq[WHITE] = sq;
 			if (piece == bK) pos->KingSq[BLACK] = sq;
+
+			//
+			if(piece == wP)
+			{
+				SETBIT(pos->pawns[WHITE], SQ64(sq));
+				SETBIT(pos->pawns[BOTH], SQ64(sq));
+			}else if(piece == bP)
+			{
+				SETBIT(pos->pawns[BLACK], SQ64(sq));
+				SETBIT(pos->pawns[BOTH], SQ64(sq));
+			}
 		}
 	}
 }
