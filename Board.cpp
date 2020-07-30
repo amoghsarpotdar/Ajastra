@@ -128,13 +128,14 @@ int Board::Parse_Fen(const char* fen, S_BOARD* pos)
 
 	//At this point *fen should be pointing to the field [side to move] in FEN schema.
 	ASSERT(*fen == 'w' || *fen == 'b');
-	pos->side == (*fen == 'w') ? WHITE : BLACK;
+	pos->side = (*fen == 'w') ? WHITE : BLACK;
 	fen += 2;
 
 	//Parse castling permissions.
 	for (i = 0; i < 4; i++)
 	{
 		if (*fen == ' ') { break; }
+		
 		switch (*fen)
 		{
 		case 'K': pos->castlePerm |= WKCA; break;
@@ -151,8 +152,8 @@ int Board::Parse_Fen(const char* fen, S_BOARD* pos)
 
 	if (*fen != '-')
 	{
-		file = fen[0] - 'a';	//??
-		rank = fen[1] - '1';	//??
+		file = fen[0] - 'a';	//?? a = Decimal 97
+		rank = fen[1] - '1';	//?? 1 = Decimal 49
 
 		ASSERT(file >= FILE_A && file <= FILE_H);
 		ASSERT(rank >= RANK_1 && rank <= RANK_8);
@@ -193,7 +194,7 @@ void Board::PrintBoard(const S_BOARD* pos)
 	}
 	printf("\n");
 	printf("side:%c\n", SideChar[pos->side]);
-	printf("enPas:%c\n", pos->enPass);
+	printf("enPas:%c\n", pos->enPass);				//This currently prints a decimal, will have to be converted to actual square.
 	//Print castling permissions.
 	printf("castle:%c%c%c%c\n",
 		pos->castlePerm & WKCA ? 'K' : '-',
