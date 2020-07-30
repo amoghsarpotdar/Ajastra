@@ -85,9 +85,10 @@ typedef struct
 	U64 posKey;					//Unique key generated for each position. Useful to track repetitions in position.
 	int pceNum[13];				//Number of pieces on board, indexed by piece type (wP, wN, wB, wR, wQ, wK, bP, wN, wB, wR, wQ)
 
-	int bigPce[3];				//All pieces except pawns
-	int majPce[3];				//Rooks and Queens (white, black, both)
-	int minPce[3];				//Bishops and Knights (white, black, both)
+	int bigPce[2];				//All pieces except pawns
+	int majPce[2];				//Rooks and Queens (white, black)
+	int minPce[2];				//Bishops and Knights (white, black)
+	int material[2];			//'Material' score (white, black)
 
 	S_UNDO history[MAXGAMEMOVES];
 
@@ -118,5 +119,11 @@ extern char PceChar[];
 extern char SideChar[];
 extern char RankChar[];
 extern char FileChar[];
+
+extern int PieceBig[13];
+extern int PieceMaj[13];
+extern int PieceMin[13];
+extern int PieceVal[13];
+extern int PieceCol[13];
 
 #endif
