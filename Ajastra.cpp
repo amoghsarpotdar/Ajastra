@@ -10,7 +10,7 @@ int main(){
 	//bitboard _playbitboard;
 	Board _board;
 	_initializer.AllInit();
-	S_BOARD board[1];
+	/*S_BOARD board[1];
 	_board.Parse_Fen(START_FEN, board);
 	_board.PrintBoard(board);
 	
@@ -18,7 +18,7 @@ int main(){
 	_board.PrintBoard(board);
 	
 	_board.Parse_Fen(FEN3, board);
-	_board.PrintBoard(board);
+	_board.PrintBoard(board);*/
 	
 	return 0;
 }

@@ -17,6 +17,7 @@ class init
 public:
 	void AllInit();
 	void InitBitMasks();
+	void InitFilesRanksBrd();
 
 private:
 	void InitSq120To64();
