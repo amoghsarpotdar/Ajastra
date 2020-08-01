@@ -13,30 +13,15 @@ int main(){
 	init _initializer;
 	Board theboard;
 	bitboard bitBoard;
-	S_BOARD board[1];
+	S_BOARD board[1] = {};
 
 	_initializer.AllInit();
 	theboard.Parse_Fen(FEN4, board);
-	theboard.UpdateListsMaterial(board);
 	theboard.PrintBoard(board);
-	printf("\nwP:\n");
-	bitBoard.PrintBitBoard(board->pawns[WHITE]);
-	printf("\nbP:\n");
-	bitBoard.PrintBitBoard(board->pawns[BLACK]);
-	printf("\nall:\n");
-	bitBoard.PrintBitBoard(board->pawns[BOTH]);
-	//theboard.PrintBoard(board->pawns[WHITE]);;
-
-	/*S_BOARD board[1];
-	_board.Parse_Fen(START_FEN, board);
-	_board.PrintBoard(board);
-	
-	_board.Parse_Fen(FEN2, board);
-	_board.PrintBoard(board);
-	
-	_board.Parse_Fen(FEN3, board);
-	_board.PrintBoard(board);*/
-	
+	printf("\nForced asserts...\n");
+	board->posKey ^= sideKey;
+	ASSERT(theboard.CheckBoard(board, bitBoard));
+			
 	return 0;
 }
 

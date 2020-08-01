@@ -103,7 +103,8 @@ typedef struct
 #define SQ120(sq64) Sq64ToSq120[sq64]				//Shortcut to Sq64ToSq120  defined in globals below, defined for convenience.
 #define CLRBIT(bb, sq) ((bb) &= ClearMask[(sq)])	//Takes a bitboard, performs bitwise AND operation.
 #define SETBIT(bb, sq) ((bb) |= SetMask[(sq)])		//Takes a bitboard, performs exclusive OR operation.
-
+//#define POP(b) PopBit(b)
+//#define CNT(b) CountBits(b)
 /*Functions*/
 
 /*Globals*/
@@ -129,4 +130,5 @@ extern int PieceCol[13];
 
 extern int FilesBrd[BRD_SQ_NUM];
 extern int RanksBrd[BRD_SQ_NUM];
+
 #endif

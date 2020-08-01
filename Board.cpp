@@ -173,8 +173,7 @@ int Board::Parse_Fen(const char* fen, S_BOARD* pos)
 	positionkeyprocessor posKeyProcessor;
 	pos->posKey = posKeyProcessor.GeneratePosKey(pos);
 
-	//TODO : Should we be calling the UpdateListsMaterial function over here?
-	//
+	UpdateListsMaterial(pos);
 	return 0;
 }
 
@@ -231,8 +230,6 @@ void Board::UpdateListsMaterial(S_BOARD* pos)
 			if (PieceMaj[piece] == TRUE) pos->majPce[colour]++;
 
 			pos->material[colour] += PieceVal[piece];
-
-			//Piece List
 			pos->pList[piece][pos->pceNum[piece]] = sq;
 			pos->pceNum[piece]++;
 
@@ -253,3 +250,99 @@ void Board::UpdateListsMaterial(S_BOARD* pos)
 	}
 }
 
+
+int Board::CheckBoard(const S_BOARD* pos, bitboard board)
+{
+	int t_pceNum[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };
+	int t_bigPce[2] = { 0,0 };
+	int t_majPce[2] = { 0,0 };
+	int t_minPce[2] = { 0,0 };
+	int t_material[2] = { 0,0 };
+
+	int sq64, t_piece, t_pce_num, sq120, colour, pcount;
+
+	U64 t_pawns[3] = { 0ULL, 0ULL, 0ULL };
+
+	t_pawns[WHITE] = pos->pawns[WHITE];
+	t_pawns[BLACK] = pos->pawns[BLACK];
+	t_pawns[BOTH] = pos->pawns[BOTH];
+
+	//Go through each piece on the board (in 
+	for(t_piece = wP; t_piece<=bK; ++t_piece)
+	{
+		for(t_pce_num=0; t_pce_num<pos->pceNum[t_piece];++t_pce_num)
+		{
+			sq120 = pos->pList[t_piece][t_pce_num];
+			ASSERT(pos->pieces[sq120] == t_piece);
+		}
+	}
+
+	for(sq64=0; sq64<64; ++sq64)
+	{
+		sq120 = SQ120(sq64);
+		t_piece = pos->pieces[sq120];
+		t_pceNum[t_piece]++;
+		colour = PieceCol[t_piece];
+		if (PieceBig[t_piece] == TRUE) t_bigPce[colour]++;
+		if (PieceMin[t_piece] == TRUE) t_minPce[colour]++;
+		if (PieceMin[t_piece] == TRUE) t_majPce[colour]++;
+
+		t_material[colour] += PieceVal[t_piece];
+	}
+
+	for(t_piece = wP; t_piece <=bK; ++t_piece)
+	{
+		ASSERT(t_pceNum[t_piece] == pos->pceNum[t_piece]);
+	}
+
+	//Check bitboards count
+	//pcount = CNT(t_pawns[WHITE]);
+	//bitboard board;
+	positionkeyprocessor posKeyProcessor;
+	pcount = board.CountBits(t_pawns[WHITE]);
+	
+	ASSERT(pcount == pos->pceNum[wP]);
+	pcount = board.CountBits(t_pawns[BLACK]);
+
+	ASSERT(pcount == pos->pceNum[bP]);
+	pcount = board.CountBits(t_pawns[BOTH]);
+	
+	ASSERT(pcount == (pos->pceNum[bP] + pos->pceNum[wP]));
+
+	//Verify all white pawns on 120 square board match with their relevant position on 64 square board.
+	while(t_pawns[WHITE])
+	{
+		sq64 = board.PopBit(&t_pawns[WHITE]);
+		ASSERT(pos->pieces[SQ120(sq64)] == wP);
+	}
+
+	//Verify all black pawns on 120 square board match with their relevant position on 64 square board.
+	while(t_pawns[BLACK])
+	{
+		sq64 = board.PopBit(&t_pawns[BLACK]);
+		ASSERT(pos->pieces[SQ120(sq64)] == bP);
+	}
+
+	//Verify all pawns on 120 square board match with their relevant position on 64 square board.
+	while(t_pawns[BOTH])
+	{
+		sq64 = board.PopBit(&t_pawns[BOTH]);
+		ASSERT((pos->pieces[SQ120(sq64)] == bP) || (pos->pieces[SQ120(sq64)] == wP));
+	}
+
+	ASSERT(t_material[WHITE] == pos->material[WHITE] && t_material[BLACK] == pos->material[BLACK]);
+	ASSERT(t_minPce[WHITE] == pos->minPce[WHITE] && t_minPce[BLACK] == pos->minPce[BLACK]);
+	ASSERT(t_majPce[WHITE] == pos->majPce[WHITE] && t_majPce[BLACK] == pos->majPce[BLACK]);
+	ASSERT(t_bigPce[WHITE] == pos->bigPce[WHITE] && t_bigPce[BLACK] == pos->bigPce[BLACK]);
+
+	ASSERT(pos->side == WHITE || pos->side == BLACK);
+	ASSERT(posKeyProcessor.GeneratePosKey(pos) == pos->posKey);
+
+	ASSERT(pos->enPass == NO_SQ || (RanksBrd[pos->enPass] == RANK_6 && pos->side == WHITE) || (RanksBrd[pos->enPass] == RANK_3 && pos->side == BLACK));
+
+	ASSERT(pos->pieces[pos->KingSq[WHITE]] == wK);
+	ASSERT(pos->pieces[pos->KingSq[BLACK]] == bK);
+
+	return true;
+	
+}

@@ -30,6 +30,7 @@ void init::InitFilesRanksBrd()
 		RanksBrd[index] = OFFBOARD;
 	}
 
+	//Go through all files and ranks, for each square here
 	for(rank=RANK_1; rank<= RANK_8; ++rank)
 	{
 		for(file=FILE_A; file<=FILE_H; ++file)
