@@ -7,6 +7,35 @@
 #include "bitboard.h"
 #include "Board.h"
 #include "Init.h"
+#include "Attack.h"
+
+
+void ShowSqAttackedBySide(const int side, const S_BOARD* pos)
+{
+	int rank = 0;
+	int file = 0;
+	int sq = 0;
+	Attack attack;
+
+	printf("\n\nSquares attacked by :%c\n", SideChar[side]);
+	for (rank = RANK_8; rank >= RANK_1; --rank)
+	{
+		for (file = FILE_A; file <= FILE_H; ++file)
+		{
+			sq = FR2SQ(file, rank);
+			if (attack.SqAttacked(sq, side, pos) == TRUE)
+			{
+				printf("X");
+			}
+			else
+			{
+				printf("-");
+			}
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
 
 int main(){
 
@@ -16,19 +45,35 @@ int main(){
 	S_BOARD board[1] = {};
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(FEN4, board);
+	theboard.Parse_Fen(FENQUEENSATTACKINGEACHOTHER, board);
 	theboard.PrintBoard(board);
-	printf("\nForced asserts...\n");
-	board->posKey ^= sideKey;
-	ASSERT(theboard.CheckBoard(board, bitBoard));
-			
+
+	printf("\n\nWhite Attacking:\n");
+	ShowSqAttackedBySide(WHITE, board);
+
+	printf("\n\nBlack Attacking:\n");
+	ShowSqAttackedBySide(BLACK, board);
+	
 	return 0;
 }
 
-
-
 /**************************TESTS***********************************/
 /*
+
+void TestCheckBoardAsserts()
+{
+	init _initializer;
+	Board theboard;
+	bitboard bitBoard;
+	S_BOARD board[1] = {};
+
+	_initializer.AllInit();
+	theboard.Parse_Fen(FEN4, board);
+	theboard.PrintBoard(board);
+	printf("\nForced asserts...\n");
+	board->pceNum[wP]--;
+	ASSERT(theboard.CheckBoard(board, bitBoard));
+}
 
 void TestInitFilesRanksBrd()
 {

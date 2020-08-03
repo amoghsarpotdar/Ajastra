@@ -31,6 +31,7 @@ typedef unsigned long long U64;
 #define FEN2 "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"			//FEN representation of position after 1.e4. Used for testing only.
 #define FEN3 "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"		//FEN representation of position after 1.e4 c5. Used for testing only.
 #define FEN4 "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1"	//??
+#define FENQUEENSATTACKINGEACHOTHER "8/3q4/8/8/4Q3/8/8/8 w - - 0 2 "												//This is an illegal position but helps us test attacks of queens on each other.
 
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK};
 enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE};
@@ -126,9 +127,20 @@ extern int PieceBig[13];
 extern int PieceMaj[13];
 extern int PieceMin[13];
 extern int PieceVal[13];
-extern int PieceCol[13];
+extern int PieceCol[13];							//Indicates color of a given piece
 
 extern int FilesBrd[BRD_SQ_NUM];
 extern int RanksBrd[BRD_SQ_NUM];
+
+//These arrays indicate what kind of piece it is, that is attacking on a given square X
+extern int PieceKnight[13];
+extern int PieceKing[13];
+extern int PieceRookQueen[13];
+extern int PieceBishopQueen[13];
+
+#define IsBQ(p) (PieceBishopQueen[(p)])
+#define IsRQ(p) (PieceRookQueen[(p)])
+#define IsKn(p) (PieceKnight[(p)])
+#define IsKi(p) (PieceKing[(p)])
 
 #endif

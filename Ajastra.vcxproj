@@ -148,12 +148,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ajastra.cpp" />
+    <ClCompile Include="Attack.cpp" />
     <ClCompile Include="bitboard.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Init.cpp" />
     <ClCompile Include="positionkeyprocessor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Attack.h" />
     <ClInclude Include="bitboard.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="defs.h" />
