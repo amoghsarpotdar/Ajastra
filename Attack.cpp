@@ -12,6 +12,7 @@ int PieceKing[13] = { FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FAL
 int PieceRookQueen[13] = { FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE };
 int PieceBishopQueen[13] = { FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE };
 
+
 int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos)
 {
 	int pce, index, t_sq, dir;
@@ -25,7 +26,7 @@ int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos)
 		}
 	}else
 	{
-		if (pos->pieces[sq + 11] == bP || pos->pieces[sq + 9] == bP)
+		if (pos->pieces[sq+11] == bP || pos->pieces[sq+9] == bP)
 			return TRUE;
 	}
 
@@ -33,13 +34,16 @@ int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos)
 	for(index=0;index<8;++index)
 	{
 		pce = pos->pieces[sq + KnDir[index]];				//Get the piece on KnDir[index] position from piece array
-		if(IsKn(pce) && PieceCol[pce] == side)				//If the piece is a knight and of color we are looking for
-		{
-			return TRUE;									//This square is being attacked by the knight
+
+		if (pce != EMPTY && pce != OFFBOARD) {
+			if (IsKn(pce) && PieceCol[pce] == side)				//If the piece is a knight and of color we are looking for
+			{
+				return TRUE;									//This square is being attacked by the knight
+			}
 		}
 	}
 
-	//Check attacks by rooks and queens
+	//Check attacks by rooks and queens (straight line attacks)
 	for(index=0; index<4; ++index)
 	{
 		dir = RkDir[index];
@@ -60,7 +64,7 @@ int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos)
 		}
 	}
 
-	//Check attacks by bishops and queens
+	//Check attacks by bishops and queens (diagonal attacks)
 	for(index=0; index<4; ++index)
 	{
 		dir = BiDir[index];
@@ -81,7 +85,7 @@ int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos)
 		}
 	}
 
-	//Check attacks by kings
+	//Check attacks by kings (king attacks)
 	for(index=0; index<8; ++index)
 	{
 		pce = pos->pieces[sq + KiDir[index]];

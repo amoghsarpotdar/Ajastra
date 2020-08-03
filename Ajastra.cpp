@@ -23,7 +23,7 @@ void ShowSqAttackedBySide(const int side, const S_BOARD* pos)
 		for (file = FILE_A; file <= FILE_H; ++file)
 		{
 			sq = FR2SQ(file, rank);
-			if (attack.SqAttacked(sq, side, pos) == TRUE)
+			if ((attack.SqAttacked(sq, side, pos)) == TRUE)
 			{
 				printf("X");
 			}

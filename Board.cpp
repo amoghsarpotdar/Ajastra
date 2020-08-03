@@ -157,7 +157,7 @@ int Board::Parse_Fen(const char* fen, S_BOARD* pos)
 	}
 	fen++;
 
-	//ASSERT(pos->castlePerm > 0 && pos->castlePerm <= 15);
+	ASSERT(pos->castlePerm > 0 && pos->castlePerm <= 15);
 
 	if (*fen != '-')
 	{
