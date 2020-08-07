@@ -8,7 +8,91 @@
 #include "Board.h"
 #include "Init.h"
 #include "Attack.h"
+#include "Move.h"
 
+void PrintBinary(int move)
+{
+	int index = 0;
+	printf("As binary: \n");
+	for(index = 27; index >= 0; index--)
+	{
+		if ((1 << index) & move) printf("1");
+		else printf("0");
+		if (index != 28 && index % 4 == 0) printf(" ");
+	}
+	printf("\n");
+}
+
+int main(){
+
+	init _initializer;
+	Board theboard;
+	bitboard bitBoard;
+	S_BOARD board[1] = {};
+	Move mv;
+
+	_initializer.AllInit();
+	theboard.PrintBoard(board);
+
+	int move = 0;
+	int from = A2;
+	int to = H7;
+	int cap = wR;
+	int prom = bK;
+
+	move = ((from) | (to << 7) | (cap << 14) | (prom << 20));
+
+	printf("from:%d to:%d cap:%d prom:%d\n", FROMSQ(move), TOSQ(move), CAPTURED(move), PROMOTED(move));
+
+	printf("Algebraic from:%s\n", mv.PrintSquare(from));
+	printf("Algebraic to:%s\n", mv.PrintSquare(to));
+	printf("Algebraic move:%s\n", mv.PrintMove(move));
+}
+
+
+
+/**************************TESTS***********************************/
+/*
+ *
+void TestMovePrint()
+{
+	init _initializer;
+	Board theboard;
+	bitboard bitBoard;
+	S_BOARD board[1] = {};
+
+	_initializer.AllInit();
+	//theboard.Parse_Fen(FENQUEENSATTACKINGEACHOTHER, board);
+	theboard.PrintBoard(board);
+
+	int move = 0, from = 6, to = 12;
+	int cap = wR; int prom = bR;
+	move = ((from) | (to << 7) | (cap << 14) | (prom << 20));
+	printf("\ndec: %d hex: %X\n", move, move);
+	PrintBinary(move);
+	printf("from:%d to:%d cap:%d prom:%d\n", FROMSQ(move), TOSQ(move), CAPTURED(move), PROMOTED(move));
+	//move |= MFLAGPS;
+	printf("is PST : %s \n", (move & MFLAGPS) ? "YES" : "NO");
+	return 0;
+}
+
+void TestSqAttackedBySide()
+{
+	init _initializer;
+	Board theboard;
+	bitboard bitBoard;
+	S_BOARD board[1] = {};
+
+	_initializer.AllInit();
+	theboard.Parse_Fen(FENQUEENSATTACKINGEACHOTHER, board);
+	theboard.PrintBoard(board);
+
+	printf("\n\nWhite Attacking:\n");
+	ShowSqAttackedBySide(WHITE, board);
+
+	printf("\n\nBlack Attacking:\n");
+	ShowSqAttackedBySide(BLACK, board);
+}
 
 void ShowSqAttackedBySide(const int side, const S_BOARD* pos)
 {
@@ -37,28 +121,6 @@ void ShowSqAttackedBySide(const int side, const S_BOARD* pos)
 	printf("\n");
 }
 
-int main(){
-
-	init _initializer;
-	Board theboard;
-	bitboard bitBoard;
-	S_BOARD board[1] = {};
-
-	_initializer.AllInit();
-	theboard.Parse_Fen(FENQUEENSATTACKINGEACHOTHER, board);
-	theboard.PrintBoard(board);
-
-	printf("\n\nWhite Attacking:\n");
-	ShowSqAttackedBySide(WHITE, board);
-
-	printf("\n\nBlack Attacking:\n");
-	ShowSqAttackedBySide(BLACK, board);
-	
-	return 0;
-}
-
-/**************************TESTS***********************************/
-/*
 
 void TestCheckBoardAsserts()
 {
