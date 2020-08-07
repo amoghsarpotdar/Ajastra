@@ -153,6 +153,7 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Init.cpp" />
     <ClCompile Include="Move.cpp" />
+    <ClCompile Include="MoveGenerator.cpp" />
     <ClCompile Include="positionkeyprocessor.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +163,7 @@
     <ClInclude Include="defs.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="Move.h" />
+    <ClInclude Include="MoveGenerator.h" />
     <ClInclude Include="positionkeyprocessor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
