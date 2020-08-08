@@ -1,10 +1,10 @@
 #pragma once
-#ifndef _BITBOARD_H_
-#define _BITBOARD_H_
+#ifndef _BITBOARDPROCESSOR_H_
+#define _BITBOARDPROCESSOR_H_
 
 #include "defs.h"
 
-class bitboard
+class bitboardProcessor
 {
 
 private:

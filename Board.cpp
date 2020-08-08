@@ -12,11 +12,18 @@ char SideChar[] = "wb-";
 char RankChar[] = "12345678";
 char FileChar[] = "abcdefgh";
 
+//int PieceBig[13] = { FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE };
+//int PieceMaj[13] = { FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE };
+//int PieceMin[13] = { FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE };
+//int PieceVal[13] = { 0, 100, 325, 325, 550, 1000, 50000, 100, 325, 325, 550, 1000, 50000 };
+//int PieceCol[13] = { BOTH, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK };
+
 int PieceBig[13] = { FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE };
 int PieceMaj[13] = { FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE };
 int PieceMin[13] = { FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE };
 int PieceVal[13] = { 0, 100, 325, 325, 550, 1000, 50000, 100, 325, 325, 550, 1000, 50000 };
-int PieceCol[13] = { BOTH, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK };
+int PieceCol[13] = { BOTH, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
+	BLACK, BLACK, BLACK, BLACK, BLACK, BLACK };
 
 int FilesBrd[BRD_SQ_NUM];
 int RanksBrd[BRD_SQ_NUM];
@@ -251,7 +258,7 @@ void Board::UpdateListsMaterial(S_BOARD* pos)
 }
 
 
-int Board::CheckBoard(const S_BOARD* pos, bitboard board)
+int Board::CheckBoard(const S_BOARD* pos, bitboardProcessor bitboardproc)
 {
 	int t_pceNum[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };
 	int t_bigPce[2] = { 0,0 };
@@ -285,11 +292,14 @@ int Board::CheckBoard(const S_BOARD* pos, bitboard board)
 		colour = PieceCol[t_piece];
 		if (PieceBig[t_piece] == TRUE) t_bigPce[colour]++;
 		if (PieceMin[t_piece] == TRUE) t_minPce[colour]++;
-		if (PieceMin[t_piece] == TRUE) t_majPce[colour]++;
+		if (PieceMaj[t_piece] == TRUE) t_majPce[colour]++;
 
 		t_material[colour] += PieceVal[t_piece];
 	}
 
+	//This loop verifies the number of pieces of given type (e.g. Black rook, etc.)
+	//If the ASSERT below fails, something has gone wrong while parsing the FEN
+	//string or extracting the board position into bitboard.
 	for(t_piece = wP; t_piece <=bK; ++t_piece)
 	{
 		ASSERT(t_pceNum[t_piece] == pos->pceNum[t_piece]);
@@ -299,34 +309,34 @@ int Board::CheckBoard(const S_BOARD* pos, bitboard board)
 	//pcount = CNT(t_pawns[WHITE]);
 	//bitboard board;
 	positionkeyprocessor posKeyProcessor;
-	pcount = board.CountBits(t_pawns[WHITE]);
+	pcount = bitboardproc.CountBits(t_pawns[WHITE]);
 	
 	ASSERT(pcount == pos->pceNum[wP]);
-	pcount = board.CountBits(t_pawns[BLACK]);
+	pcount = bitboardproc.CountBits(t_pawns[BLACK]);
 
 	ASSERT(pcount == pos->pceNum[bP]);
-	pcount = board.CountBits(t_pawns[BOTH]);
+	pcount = bitboardproc.CountBits(t_pawns[BOTH]);
 	
 	ASSERT(pcount == (pos->pceNum[bP] + pos->pceNum[wP]));
 
 	//Verify all white pawns on 120 square board match with their relevant position on 64 square board.
 	while(t_pawns[WHITE])
 	{
-		sq64 = board.PopBit(&t_pawns[WHITE]);
+		sq64 = bitboardproc.PopBit(&t_pawns[WHITE]);
 		ASSERT(pos->pieces[SQ120(sq64)] == wP);
 	}
 
 	//Verify all black pawns on 120 square board match with their relevant position on 64 square board.
 	while(t_pawns[BLACK])
 	{
-		sq64 = board.PopBit(&t_pawns[BLACK]);
+		sq64 = bitboardproc.PopBit(&t_pawns[BLACK]);
 		ASSERT(pos->pieces[SQ120(sq64)] == bP);
 	}
 
 	//Verify all pawns on 120 square board match with their relevant position on 64 square board.
 	while(t_pawns[BOTH])
 	{
-		sq64 = board.PopBit(&t_pawns[BOTH]);
+		sq64 = bitboardproc.PopBit(&t_pawns[BOTH]);
 		ASSERT((pos->pieces[SQ120(sq64)] == bP) || (pos->pieces[SQ120(sq64)] == wP));
 	}
 

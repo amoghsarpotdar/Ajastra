@@ -10,6 +10,7 @@ class Move
 public:
 	char* PrintSquare(const int sq);
 	char* PrintMove(const int move);
+	void PrintMoveList(const S_MOVELIST* movelist);
 };
 
 #endif

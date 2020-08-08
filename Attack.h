@@ -4,10 +4,12 @@
 
 #include "defs.h"
 
+class bitboardProcessor;
+
 class Attack
 {
 	public:
-		int SqAttacked(const int sq, const int side, const S_BOARD* pos);
+		int SqAttacked(const int sq, const int side, const S_BOARD* pos, bitboardProcessor bitboardproc);
 };
 
 #endif

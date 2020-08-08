@@ -149,22 +149,24 @@
   <ItemGroup>
     <ClCompile Include="Ajastra.cpp" />
     <ClCompile Include="Attack.cpp" />
-    <ClCompile Include="bitboard.cpp" />
+    <ClCompile Include="bitboardProcessor.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Init.cpp" />
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="MoveGenerator.cpp" />
     <ClCompile Include="positionkeyprocessor.cpp" />
+    <ClCompile Include="Validator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attack.h" />
-    <ClInclude Include="bitboard.h" />
+    <ClInclude Include="bitboardProcessor.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="defs.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="MoveGenerator.h" />
     <ClInclude Include="positionkeyprocessor.h" />
+    <ClInclude Include="Validator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -46,3 +46,20 @@ char* Move::PrintMove(const int move)
 	return MvStr;
 }
 
+void Move::PrintMoveList(const S_MOVELIST* movelist)
+{
+	int index = 0;
+	int score = 0;
+	int move = 0;
+	printf("MoveList:\n", movelist->count);
+
+	for(index=0; index<movelist->count; ++index)
+	{
+		move = movelist->moves[index].move;
+		score = movelist->moves[index].score;
+
+		printf("Move: %d > %s (score:%d)\n", index + 1, PrintMove(move), score);
+	}
+	printf("MoveList Total %d Moves:\n\n", movelist->count);
+}
+

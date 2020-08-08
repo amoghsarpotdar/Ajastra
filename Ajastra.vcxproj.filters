@@ -21,9 +21,6 @@
     <ClCompile Include="Init.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bitboard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="positionkeyprocessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -39,15 +36,18 @@
     <ClCompile Include="MoveGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Validator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bitboardProcessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="defs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Init.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bitboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="positionkeyprocessor.h">
@@ -63,6 +63,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MoveGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Validator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bitboardProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

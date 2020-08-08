@@ -1,5 +1,9 @@
 #include "Attack.h"
 
+
+#include "Board.h"
+#include "Validator.h"
+
 //Possible incoming attack directions on to a square.
 const int KnDir[8] = { -8, -19, -21, -12, 8, 19, 21, 12 };		//Knight's attack squares onto a square X
 const int RkDir[4] = { -1, -10, 1, 10 };						//Rook's attack squares onto a square X
@@ -7,15 +11,27 @@ const int BiDir[4] = { -9, -11, 11, 9 };						//Bishop's attack squares onto a s
 const int KiDir[8] = { -1, -10, 1, 10, -9, -11, 11, 9 };		//King's attack squares onto a square X
 
 //These arrays indicate what kind of piece it is, that is attacking on a given square X
+//int PieceKnight[13] = { FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE };
+//int PieceKing[13] = { FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE };
+//int PieceRookQueen[13] = { FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE };
+//int PieceBishopQueen[13] = { FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE };
+
 int PieceKnight[13] = { FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE };
 int PieceKing[13] = { FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE };
 int PieceRookQueen[13] = { FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE };
 int PieceBishopQueen[13] = { FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE };
 
 
-int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos)
+int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos, bitboardProcessor bitboardproc)
 {
 	int pce, index, t_sq, dir;
+
+	Validator validator;
+	Board board;
+
+	ASSERT(validator.SqOnBoard(sq));			//Ensure that square is on board.
+	ASSERT(validator.SideValid(side));			//Ensure that correct side is set to move.
+	ASSERT(board.CheckBoard(pos, bitboardproc));
 
 	//Check attacks by pawns
 	if(side == WHITE)

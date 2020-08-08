@@ -4,27 +4,54 @@
 #include <cstdio>
 
 
-#include "bitboard.h"
+#include "bitboardProcessor.h"
 #include "Board.h"
 #include "Init.h"
 #include "Attack.h"
 #include "Move.h"
+#include "MoveGenerator.h"
 
-void PrintBinary(int move)
-{
-	int index = 0;
-	printf("As binary: \n");
-	for(index = 27; index >= 0; index--)
-	{
-		if ((1 << index) & move) printf("1");
-		else printf("0");
-		if (index != 28 && index % 4 == 0) printf(" ");
-	}
-	printf("\n");
-}
 
 int main(){
 
+	init _initializer;
+	Board theboard;
+	bitboardProcessor bitboardProcessor;
+	S_BOARD board[1] = {};
+	Move mv;
+	MoveGenerator movegenerator;
+
+	_initializer.AllInit();
+	theboard.Parse_Fen(PAWNMOVES, board);
+	theboard.PrintBoard(board);
+
+	S_MOVELIST movelist[1];
+	movegenerator.GenerateAllMoves(board, bitboardProcessor, movelist, theboard);
+	mv.PrintMoveList(movelist);
+
+	/*int move = 0;
+	int from = A2;
+	int to = H7;
+	int cap = wR;
+	int prom = bK;
+
+	move = ((from) | (to << 7) | (cap << 14) | (prom << 20));
+
+	printf("from:%d to:%d cap:%d prom:%d\n", FROMSQ(move), TOSQ(move), CAPTURED(move), PROMOTED(move));
+
+	printf("Algebraic from:%s\n", mv.PrintSquare(from));
+	printf("Algebraic to:%s\n", mv.PrintSquare(to));
+	printf("Algebraic move:%s\n", mv.PrintMove(move));*/
+}
+
+
+/**************************TESTS***********************************/
+/*
+ *
+ 
+
+void TestPrintBinary()
+{
 	init _initializer;
 	Board theboard;
 	bitboard bitBoard;
@@ -49,11 +76,19 @@ int main(){
 	printf("Algebraic move:%s\n", mv.PrintMove(move));
 }
 
+void PrintBinary(int move)
+{
+	int index = 0;
+	printf("As binary: \n");
+	for (index = 27; index >= 0; index--)
+	{
+		if ((1 << index) & move) printf("1");
+		else printf("0");
+		if (index != 28 && index % 4 == 0) printf(" ");
+	}
+	printf("\n");
+}
 
-
-/**************************TESTS***********************************/
-/*
- *
 void TestMovePrint()
 {
 	init _initializer;
