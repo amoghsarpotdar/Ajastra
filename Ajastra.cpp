@@ -22,7 +22,7 @@ int main(){
 	MoveGenerator movegenerator;
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(PAWNMOVES, board);
+	theboard.Parse_Fen(PAWNMOVESB, board);
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
