@@ -180,7 +180,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 			{
 				if (!attack.SqAttacked(E1, BLACK, pos, bitboardproc) && !attack.SqAttacked(F1, BLACK, pos, bitboardproc))
 				{
-					printf("WKCA MoveGen\n");
+					AddQuietMove(pos, MOVE(E1, G1, EMPTY, EMPTY, MFLAGCA), movelist);
 				}
 			}
 		}
@@ -192,7 +192,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 			{
 				if (!attack.SqAttacked(E1, BLACK, pos, bitboardproc) && !attack.SqAttacked(D1, BLACK, pos, bitboardproc))
 				{
-					printf("WQCA MoveGen\n");
+					AddQuietMove(pos, MOVE(E1, C1, EMPTY, EMPTY, MFLAGCA), movelist);
 				}
 			}
 		}
@@ -240,7 +240,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 			{
 				if (!attack.SqAttacked(E8, WHITE, pos, bitboardproc) && !attack.SqAttacked(F8, WHITE, pos, bitboardproc))
 				{
-					printf("BKCA MoveGen\n");
+					AddQuietMove(pos, MOVE(E1, G1, EMPTY, EMPTY, MFLAGCA), movelist);
 				}
 			}
 		}
@@ -252,7 +252,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 			{
 				if (!attack.SqAttacked(E8, WHITE, pos, bitboardproc) && !attack.SqAttacked(D8, WHITE, pos, bitboardproc))
 				{
-					printf("BQCA MoveGen\n");
+					AddQuietMove(pos, MOVE(E8, C8, EMPTY, EMPTY, MFLAGCA), movelist);
 				}
 			}
 		}
@@ -265,7 +265,6 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 	while(pce != 0)
 	{
 		ASSERT(validator.PieceValid(pce));
-		printf("sliders pceIndex : %d pce: %d\n", pceIndex, pce);
 
 		for (pceNum = 0; pceNum < pos->pceNum[pce]; ++pceNum)
 		{
@@ -286,13 +285,13 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 						//...and if the color of the piece on target square is not same as the color of our piece
 						if (PieceCol[pos->pieces[t_sq]] == side ^ 1)						//0 (black) EXOR 1 is 1 (white), and 1 (white) EXOR 1 is 0 (black)
 						{
-							printf("\t\tCapture on %s\n", mv.PrintSquare(t_sq));
+							AddCaptureMove(pos, MOVE(sq, t_sq, pos->pieces[t_sq], EMPTY, 0), movelist);
 						}
 						//We have to break out of the loop because we have encountered a piece
 						//in our path.
 						break;			
 					}
-					printf("\t\tNormal on %s\n", mv.PrintSquare(t_sq));
+					AddQuietMove(pos, MOVE(sq, t_sq, EMPTY, EMPTY, 0), movelist);
 					t_sq += dir;
 				}
 			}
@@ -329,12 +328,12 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 					//...and if the color of the piece on target square is not same as the color of our piece
 					if(PieceCol[pos->pieces[t_sq]] == side ^ 1)						//0 (black) EXOR 1 is 1 (white), and 1 (white) EXOR 1 is 0 (black)
 					{
-						printf("\t\tCapture on %s\n", mv.PrintSquare(t_sq));
+						AddCaptureMove(pos, MOVE(sq, t_sq, pos->pieces[t_sq], EMPTY, 0), movelist);
 					}
 					continue;
 				}else
 				{
-					printf("\t\tNormal on %s\n", mv.PrintSquare(t_sq));
+					AddQuietMove(pos, MOVE(sq, t_sq, EMPTY, EMPTY, 0), movelist);
 				}
 			}
 		}
