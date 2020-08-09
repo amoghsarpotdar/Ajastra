@@ -25,6 +25,12 @@ void MoveGenerator::AddCaptureMove(const S_BOARD* position, int move, S_MOVELIST
 
 void MoveGenerator::AddWhitePawnCaptureMove(const S_BOARD* pos, const int from, const int to, const int cap, S_MOVELIST* movelist)
 {
+	Validator validator;
+	
+	ASSERT(validator.PieceValidEmpty(cap));
+	ASSERT(validator.SqOnBoard(from));
+	ASSERT(validator.SqOnBoard(to));
+	
 	if(RanksBrd[from] == RANK_7)
 	{
 		AddCaptureMove(pos, MOVE(from, to, cap, wQ, 0), movelist);
@@ -39,6 +45,12 @@ void MoveGenerator::AddWhitePawnCaptureMove(const S_BOARD* pos, const int from, 
 
 void MoveGenerator::AddBlackPawnCaptureMove(const S_BOARD* pos, const int from, const int to, const int cap, S_MOVELIST* movelist)
 {
+	Validator validator;
+
+	ASSERT(validator.PieceValidEmpty(cap));
+	ASSERT(validator.SqOnBoard(from));
+	ASSERT(validator.SqOnBoard(to));
+	
 	if (RanksBrd[from] == RANK_2)
 	{
 		AddCaptureMove(pos, MOVE(from, to, cap, bQ, 0), movelist);
@@ -54,6 +66,11 @@ void MoveGenerator::AddBlackPawnCaptureMove(const S_BOARD* pos, const int from, 
 
 void MoveGenerator::AddWhitePawnMove(const S_BOARD* pos, const int from, const int to, S_MOVELIST* movelist)
 {
+	Validator validator;
+
+	ASSERT(validator.SqOnBoard(from));
+	ASSERT(validator.SqOnBoard(to));
+	
 	if(RanksBrd[from] == RANK_7)
 	{
 		AddQuietMove(pos, MOVE(from, to, EMPTY, wQ, 0), movelist);
@@ -68,6 +85,11 @@ void MoveGenerator::AddWhitePawnMove(const S_BOARD* pos, const int from, const i
 
 void MoveGenerator::AddBlackPawnMove(const S_BOARD* pos, const int from, const int to, S_MOVELIST* movelist)
 {
+	Validator validator;
+
+	ASSERT(validator.SqOnBoard(from));
+	ASSERT(validator.SqOnBoard(to));
+	
 	if (RanksBrd[from] == RANK_2)
 	{
 		AddQuietMove(pos, MOVE(from, to, EMPTY, bQ, 0), movelist);
@@ -100,6 +122,11 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 	int side = pos->side;
 	int sq = 0; int t_sq = 0;
 	int pceNum = 0;
+	int dir = 0;
+	int index = 0;
+	int pceIndex = 0;
+
+	printf("\n\nSide : %d\n", side);
 
 	if(side == WHITE)
 	{
@@ -176,6 +203,25 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 				AddCaptureMove(pos, MOVE(sq, sq - 11, EMPTY, EMPTY, MFLAGEP), movelist);
 			}
 		}
+	}
+
+	/*Move generation for sliding pieces*/
+	pceIndex = LoopSlideIndex[side];
+	pce = LoopSlidePce[pceIndex++];
+	while(pce != 0)
+	{
+		ASSERT(validator.PieceValid(pce));
+		printf("sliders pceIndex : %d pce: %d\n", pceIndex, pce);
+		pce = LoopSlidePce[pceIndex++];
+	}
+	/*Move generation for non-sliding pieces*/
+	pceIndex = LoopNonSlideIndex[side];
+	pce = LoopNonSlidePce[pceIndex++];
+	while( pce != 0)
+	{
+		ASSERT(validator.PieceValid(pce));
+		printf("non slider pceindex: %d pce:%d\n", pceIndex, pce);
+		pce = LoopNonSlidePce[pceIndex++];
 	}
 }
 
