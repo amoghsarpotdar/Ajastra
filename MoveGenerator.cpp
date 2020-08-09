@@ -1,6 +1,7 @@
 #include "stdio.h"
 #include "MoveGenerator.h"
 #include "Board.h"
+#include "Move.h"
 #include "Validator.h"
 
 //This builds a move by shifting relevant bits.
@@ -125,6 +126,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 	int dir = 0;
 	int index = 0;
 	int pceIndex = 0;
+	Move mv;
 
 	printf("\n\nSide : %d\n", side);
 
@@ -214,6 +216,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 		printf("sliders pceIndex : %d pce: %d\n", pceIndex, pce);
 		pce = LoopSlidePce[pceIndex++];
 	}
+
 	/*Move generation for non-sliding pieces*/
 	pceIndex = LoopNonSlideIndex[side];
 	pce = LoopNonSlidePce[pceIndex++];
@@ -221,6 +224,38 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 	{
 		ASSERT(validator.PieceValid(pce));
 		printf("non slider pceindex: %d pce:%d\n", pceIndex, pce);
+
+		for(pceNum = 0; pceNum < pos->pceNum[pce]; ++pceNum)
+		{
+			sq = pos->pList[pce][pceNum];
+			ASSERT(validator.SqOnBoard(sq));
+			printf("Piece:%c on %s\n", PceChar[pce], mv.PrintSquare(sq));
+			//For each direction applicable to this piece
+			for(index=0; index<NumDir[pce]; ++index)
+			{
+				dir = PceDir[pce][index];
+				t_sq = sq + dir;
+				//Skip this square if it is off the board.
+				if(SQOFFBOARD(t_sq))
+				{
+					continue;
+				}
+				//If the target square is not empty...
+				if(pos->pieces[t_sq] != EMPTY)
+				{
+					//...and if the color of the piece on target square is not same as the color of our piece
+					if(PieceCol[pos->pieces[t_sq]] == side ^ 1)						//0 (black) EXOR 1 is 1 (white), and 1 (white) EXOR 1 is 0 (black)
+					{
+						printf("\t\tCapture on %s\n", mv.PrintSquare(t_sq));
+					}
+					continue;
+				}else
+				{
+					printf("\t\tNormal on %s\n", mv.PrintSquare(t_sq));
+				}
+			}
+		}
+
 		pce = LoopNonSlidePce[pceIndex++];
 	}
 }
