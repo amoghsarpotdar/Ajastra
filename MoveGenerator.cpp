@@ -114,6 +114,7 @@ void MoveGenerator::AddEnPassantMove(const S_BOARD* position, int move, S_MOVELI
 void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboardproc, S_MOVELIST *movelist, Board board)
 {
 	Validator validator;
+	Attack attack;
 	
 	ASSERT(board.CheckBoard(pos, bitboardproc));
 
@@ -170,6 +171,31 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 				AddCaptureMove(pos, MOVE(sq, sq + 11, EMPTY, EMPTY, MFLAGEP), movelist);
 			}
 		}
+
+		//Castling implementation for White
+		//King side castling
+		if (pos->castlePerm & WKCA)
+		{
+			if (pos->pieces[F1] == EMPTY && pos->pieces[G1] == EMPTY)
+			{
+				if (!attack.SqAttacked(E1, BLACK, pos, bitboardproc) && !attack.SqAttacked(F1, BLACK, pos, bitboardproc))
+				{
+					printf("WKCA MoveGen\n");
+				}
+			}
+		}
+
+		//Queenside castling
+		if (pos->castlePerm & WQCA)
+		{
+			if (pos->pieces[D1] == EMPTY && pos->pieces[C1] == EMPTY && pos->pieces[B1] == EMPTY)
+			{
+				if (!attack.SqAttacked(E1, BLACK, pos, bitboardproc) && !attack.SqAttacked(D1, BLACK, pos, bitboardproc))
+				{
+					printf("WQCA MoveGen\n");
+				}
+			}
+		}
 	}else
 	{
 		for(pceNum = 0; pceNum < pos->pceNum[bP]; ++pceNum)
@@ -203,6 +229,31 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 			if(sq - 11 == pos->enPass)
 			{
 				AddCaptureMove(pos, MOVE(sq, sq - 11, EMPTY, EMPTY, MFLAGEP), movelist);
+			}
+		}
+
+		//Castling implementation for black
+		//King side castling
+		if (pos->castlePerm & BKCA)
+		{
+			if (pos->pieces[F8] == EMPTY && pos->pieces[G8] == EMPTY)
+			{
+				if (!attack.SqAttacked(E8, WHITE, pos, bitboardproc) && !attack.SqAttacked(F8, WHITE, pos, bitboardproc))
+				{
+					printf("BKCA MoveGen\n");
+				}
+			}
+		}
+
+		//Queenside castling
+		if (pos->castlePerm & BQCA)
+		{
+			if (pos->pieces[D8] == EMPTY && pos->pieces[C8] == EMPTY && pos->pieces[B8] == EMPTY)
+			{
+				if (!attack.SqAttacked(E8, WHITE, pos, bitboardproc) && !attack.SqAttacked(D8, WHITE, pos, bitboardproc))
+				{
+					printf("BQCA MoveGen\n");
+				}
 			}
 		}
 	}

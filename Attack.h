@@ -3,8 +3,7 @@
 #define _ATTACK_H_
 
 #include "defs.h"
-
-class bitboardProcessor;
+#include "bitboardProcessor.h"
 
 class Attack
 {

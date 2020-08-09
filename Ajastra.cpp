@@ -22,7 +22,7 @@ int main(){
 	MoveGenerator movegenerator;
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(BISHOPS, board);
+	theboard.Parse_Fen(CASTLE2, board);
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
@@ -31,9 +31,29 @@ int main(){
 
 }
 
+
+
 /**************************TESTS***********************************/
 /*
  *
+
+void TestSldingPieceMoveGenerationWithBishops()
+{
+	init _initializer;
+	Board theboard;
+	bitboardProcessor bitboardProcessor;
+	S_BOARD board[1] = {};
+	Move mv;
+	MoveGenerator movegenerator;
+
+	_initializer.AllInit();
+	theboard.Parse_Fen(BISHOPS, board);
+	theboard.PrintBoard(board);
+
+	S_MOVELIST movelist[1];
+	movegenerator.GenerateAllMoves(board, bitboardProcessor, movelist, theboard);
+	//mv.PrintMoveList(movelist);
+}
 
 void TestNonSlidingPieceMoveGenerationWithKnights()
 {
