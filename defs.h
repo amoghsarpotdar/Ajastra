@@ -35,7 +35,10 @@ typedef unsigned long long U64;
 #define FENQUEENSATTACKINGEACHOTHER "8/3q4/8/8/4Q3/8/8/8 w - - 0 2 "												//This is an illegal position but helps us test attacks of queens on each other.
 #define PAWNMOVESW "rnbqkb1r/pp1p1pPp/8/2p1pP2/1P1P4/3P3P/P1P1P3/RNBQKBNR w KQkq e6 0 1"	//Test position 1
 #define PAWNMOVESB "rnbqkbnr/p1p1p3/3p3p/1p1p4/2P1Pp2/8/PP1P1PpP/RNBQKB1R b - e3 0 1"		//Test position 2
-#define KNIGHTSKINGS "5k2/1n6/4n3/6N1/8/3N4/8/5K2 w - - 0 1"								//Test position 3
+#define KNIGHTSKINGS "5k2/1n6/4n3/6N1/8/3N4/8/5K2 w - - 0 1"						//Test position 3
+#define ROOKS "6k1/8/5r2/8/1nR5/5N2/8/6K1 w - - 0 1"								//Test position 4
+#define QUEENS "6k1/8/4nq2/8/1nQ5/5N2/1N6/6K1 w - - 0 1 "							//Test position 5
+#define BISHOPS "6k1/1b6/4n3/8/1n4B1/1B3N2/1N6/2b3K1 b - - 0 1 "					//Test position 6
 
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK};
 enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE};

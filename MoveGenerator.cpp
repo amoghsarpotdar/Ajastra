@@ -210,10 +210,42 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 	/*Move generation for sliding pieces*/
 	pceIndex = LoopSlideIndex[side];
 	pce = LoopSlidePce[pceIndex++];
+	
 	while(pce != 0)
 	{
 		ASSERT(validator.PieceValid(pce));
 		printf("sliders pceIndex : %d pce: %d\n", pceIndex, pce);
+
+		for (pceNum = 0; pceNum < pos->pceNum[pce]; ++pceNum)
+		{
+			sq = pos->pList[pce][pceNum];
+			ASSERT(validator.SqOnBoard(sq));
+			printf("Piece:%c on %s\n", PceChar[pce], mv.PrintSquare(sq));
+			//For each direction applicable to this piece
+			for (index = 0; index < NumDir[pce]; ++index)
+			{
+				dir = PceDir[pce][index];
+				t_sq = sq + dir;
+				//With sliding pieces, its not only one square in a given direction but
+				//all squares till we reach the 'off-board' square.
+				while (!SQOFFBOARD(t_sq)) {
+					//If the target square is not empty...
+					if (pos->pieces[t_sq] != EMPTY)
+					{
+						//...and if the color of the piece on target square is not same as the color of our piece
+						if (PieceCol[pos->pieces[t_sq]] == side ^ 1)						//0 (black) EXOR 1 is 1 (white), and 1 (white) EXOR 1 is 0 (black)
+						{
+							printf("\t\tCapture on %s\n", mv.PrintSquare(t_sq));
+						}
+						//We have to break out of the loop because we have encountered a piece
+						//in our path.
+						break;			
+					}
+					printf("\t\tNormal on %s\n", mv.PrintSquare(t_sq));
+					t_sq += dir;
+				}
+			}
+		}
 		pce = LoopSlidePce[pceIndex++];
 	}
 
