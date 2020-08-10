@@ -267,4 +267,77 @@ int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, bitboardProcessor bitboard
 	return TRUE;
 }
 
+int MakeMove::ReverseMoveOnBoard(S_BOARD* pos, bitboardProcessor bitboardprocessor)
+{
+	Validator validator;
+	Board board;
+	ASSERT(board.CheckBoard(pos,bitboardprocessor));									//Before we begin, ensure the board is in consistent state
+
+	//Decrement the history variables
+	pos->histPly--;																		
+	pos->histPly--;
+
+	int move = pos->history[pos->histPly].move;											//Get the last move
+	int from = FROMSQ(move);															//Get the 'from' square for this move
+	int to = TOSQ(move);																//Get the 'to' square for this move
+
+	ASSERT(validator.SqOnBoard(from));
+	ASSERT(validator.SqOnBoard(to));
+
+	if (pos->enPass != NO_SQ) HASH_EP;													//If the enpassent square was not empty then hash it
+	HASH_CA;																			//Hash the castle permission
+
+	pos->castlePerm = pos->history[pos->histPly].castlePerm;							//Restore the castling permissions to previous state
+	pos->fiftyMovesTracker = pos->history[pos->histPly].fiftyMove;						//Restore the fifty move state
+	pos->enPass = pos->history[pos->histPly].enPas;										//Restore the en-pass flag
+
+	if (pos->enPass != NO_SQ) HASH_EP;													//If en-passent square is note empty then hash it
+
+	//Process the casting state
+	HASH_CA;																			
+
+	pos->side ^= 1;
+	HASH_SIDE;
+
+	
+	if(MFLAGEP & move)																	//If this was an en-pass capture
+	{
+		if(pos->side == WHITE)
+		{
+			AddPiece(to - 10, pos, bP);											//If White made the en-pass capture, we add the White pawn back in
+		}else
+		{
+			AddPiece(to + 10, pos, wP);											//If Black made the en-pass capture, we add the Black pawn back in
+		}
+	}else if(MFLAGCA & move)
+	{
+		switch(to)
+		{
+		case C1: MovePiece(D1, A1, pos); break;									//If the target square was c1, this must be long castling, so move the rook back to a1
+		case C8: MovePiece(D8, A8, pos); break;									//If the target square was c8, this must be long castling, so move the rook back to a8
+		case G1: MovePiece(F1, H1, pos); break;									//If the target square was f1, this must be long castling, so move the rook back to h1
+		case G8: MovePiece(F8, H8, pos); break;									//If the target square was c1, this must be long castling, so move the rook back to h8
+		default: ASSERT(FALSE); break;
+		}
+	}
+
+	//Now that we are moving in reverse direction, switch the position of to and from
+	MovePiece(to, from, pos);
+
+	//Update the King's position
+	if(PieceKing[pos->pieces[from]])
+	{
+		pos->KingSq[pos->side] = from;
+	}
+
+	//If the last move was promotion, then we need to roll it back as well.
+	if(PROMOTED(move) != EMPTY)
+	{
+		ASSERT(validator.PieceValid(PROMOTED(move)) && !PiecePawn[PROMOTED(move)]);
+		ClearPiece(from, pos);
+		AddPiece(from, pos, (PieceCol[PROMOTED(move)] == WHITE ? wP : bP));
+	}
+	ASSERT(board.CheckBoard(pos, bitboardprocessor));									//Finally, make sure that we leave the board in a valid state
+	
+}
 
