@@ -1,11 +1,15 @@
 #include "MakeMove.h"
 
+
+
+#include "Attack.h"
+#include "Board.h"
 #include "Validator.h"
 
 //Hashing macros
 #define HASH_PCE(pce,sq) (pos->posKey ^= (PieceKeys[(pce)][(sq)]))			//Hashing piece
-#define HASH_CA (pos->posKey ^= (CastleKeys[(pos->castlePerm)]))			//Hashing castling permissions
-#define HASH_SIDE (pos->poskey ^= (sideKey))								//Hashing side to move
+#define HASH_CA (pos->posKey ^= (castleKeys[(pos->castlePerm)]))			//Hashing castling permissions
+#define HASH_SIDE (pos->posKey ^= (sideKey))								//Hashing side to move
 #define HASH_EP (pos->posKey ^= (PieceKeys[EMPTY][(pos->enPass)]))			//Hashing en-passant square
 
 
@@ -134,6 +138,133 @@ void MakeMove::MovePiece(int from, int to, S_BOARD* pos)
 		}
 	}
 	ASSERT(t_PieceNum);
+}
+
+int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, bitboardProcessor bitboardprocessor)
+{
+	Validator validator;
+	Board board;
+
+	ASSERT(board.CheckBoard(pos, bitboardprocessor));									//Before we begin, ensure that board state is consistent.
+	int from = FROMSQ(move);
+	int to = TOSQ(move);
+	int side = pos->side;
+
+	ASSERT(validator.SqOnBoard(from));
+	ASSERT(validator.SqOnBoard(to));
+	ASSERT(validator.SideValid(side));
+	ASSERT(validator.PieceValid(pos->pieces[from]));
+
+	pos->history[pos->histPly].posKey = pos->posKey;									//Set current positionkey in history
+
+	
+	if(move & MFLAGEP)																	//If the last move enabled en-passant possibility, then
+	{
+		if(side == WHITE)
+		{
+			ClearPiece(to - 10, pos);
+		}else
+		{
+			ClearPiece(to + 10, pos);
+		}
+	}
+	else if(move & MFLAGCA)																//If the last move sets up castling possibility, then
+	{
+		switch(to)
+		{
+		case C1:
+			MovePiece(A1, D1, pos);
+			break;
+		case C8:
+			MovePiece(A8, D8, pos);
+			break;
+		case G1:
+			MovePiece(H1, F1, pos);
+			break;
+		case G8:
+			MovePiece(H8, F8, pos);
+			break;
+		default: ASSERT(FALSE); break;													//If this assert fails, it indicates we have wrong 'to' square marked for castling
+		}
+	}
+
+	if (pos->enPass != NO_SQ) HASH_EP;
+	HASH_CA;
+
+	pos->history[pos->histPly].move = move;
+	pos->history[pos->histPly].fiftyMove = pos->fiftyMovesTracker;
+	pos->history[pos->histPly].enPas = pos->enPass;
+	pos->history[pos->histPly].castlePerm = pos->castlePerm;
+
+	pos->castlePerm &= CastlePerm[from];
+	pos->castlePerm &= CastlePerm[to];
+	pos->enPass = NO_SQ;
+
+	HASH_CA;
+
+	//If a piece was captured, we need to reset the 50 moves rule tracker
+	int captured = CAPTURED(move);														//Get the piece captured, if any
+	pos->fiftyMovesTracker++;															//Increment the fifty move tracker
+
+	if(captured != EMPTY)
+	{
+		ASSERT(validator.PieceValid(captured));
+		ClearPiece(to, pos);
+		pos->fiftyMovesTracker = 0;														//Reset the 50 moves tracker since a piece has been captured
+	}
+
+	pos->histPly++;
+	pos->ply++;
+
+	//We need to check if we need a new en-passent square set
+	if(PiecePawn[pos->pieces[from]])													//If the piece moving is a pawn
+	{
+		pos->fiftyMovesTracker = 0;														//Reset the fifty move tracker according to chess rule
+		if(move & MFLAGPS)																//Check if this move was a pawn start move
+		{
+			if(side == WHITE)
+			{
+				pos->enPass = from + 10;
+				ASSERT(RanksBrd[pos->enPass] == RANK_3);								//Ensure that en-passent square is on rank 3
+			}else
+			{
+				pos->enPass = from - 10;
+				ASSERT(RanksBrd[pos->enPass] == RANK_6);								//Ensure that en-passent square is on rank 6
+			}
+			HASH_EP;
+		}
+	}
+
+	MovePiece(from, to, pos);
+
+	//Check if promotion is applicable
+	int prPce = PROMOTED(move);
+	if(prPce != EMPTY)
+	{
+		ASSERT(validator.PieceValid(prPce) && !PiecePawn[prPce]);
+		ClearPiece(to, pos);															//Remove the pawn that is being moved
+		AddPiece(to, pos, prPce);														//Add the piece that pawn promotes to
+	}
+
+	if(PieceKing[pos->pieces[to]])														//If the move involved king, then update the king's square
+	{
+		pos->KingSq[pos->side] = to;
+	}
+
+	pos->side ^= 1;																		//Change the 'side to move' indicator
+	HASH_SIDE;	
+	
+	ASSERT(board.CheckBoard(pos, bitboardprocessor));									//After all these changes, we need to ensure the board state is consistent.
+
+	//Check if the square in which king currently stands is under attack.
+	//If so, this is an illegal move and we need to revert it.
+	Attack attack;
+	if(attack.SqAttacked(pos->KingSq[side], pos->side, pos, bitboardprocessor))
+	{
+		//TakeMove(pos);																
+		return FALSE;
+	}
+	return TRUE;
 }
 
 

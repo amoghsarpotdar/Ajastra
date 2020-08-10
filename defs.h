@@ -173,6 +173,7 @@ extern int PieceMaj[13];
 extern int PieceMin[13];
 extern int PieceVal[13];
 extern int PieceCol[13];							//Indicates color of a given piece
+extern int PiecePawn[13];							//Indicates if a given piece is a pawn
 
 extern int FilesBrd[BRD_SQ_NUM];
 extern int RanksBrd[BRD_SQ_NUM];

@@ -4,6 +4,8 @@
 
 #include "defs.h"
 
+class bitboardProcessor;
+
 class MakeMove
 {
 
@@ -11,6 +13,7 @@ public:
 	void ClearPiece(const int sq, S_BOARD *pos);
 	void AddPiece(const int sq, S_BOARD* pos, const int pce);
 	void MovePiece(int from, int to, S_BOARD* pos);
+	int MakeMoveOnBoard(S_BOARD* pos, int move, bitboardProcessor bitboardprocessor);
 	
 private:
 	const int CastlePerm[120] = {
