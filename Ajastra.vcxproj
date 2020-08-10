@@ -152,6 +152,7 @@
     <ClCompile Include="bitboardProcessor.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Init.cpp" />
+    <ClCompile Include="MakeMove.cpp" />
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="MoveGenerator.cpp" />
     <ClCompile Include="positionkeyprocessor.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="defs.h" />
     <ClInclude Include="Init.h" />
+    <ClInclude Include="MakeMove.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="MoveGenerator.h" />
     <ClInclude Include="positionkeyprocessor.h" />

@@ -129,8 +129,6 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 	int pceIndex = 0;
 	Move mv;
 
-	printf("\n\nSide : %d\n", side);
-
 	if(side == WHITE)
 	{
 		//Navigate through all White pawns.
@@ -219,7 +217,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 
 			if(!SQOFFBOARD(sq-11) && PieceCol[pos->pieces[sq - 11]] == WHITE)
 			{
-				AddBlackPawnCaptureMove(pos, sq, sq - 11, pos->pieces[sq - 1], movelist);
+				AddBlackPawnCaptureMove(pos, sq, sq - 11, pos->pieces[sq - 11], movelist);
 			}
 
 			if(sq - 9 == pos->enPass)

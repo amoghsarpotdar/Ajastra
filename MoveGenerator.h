@@ -24,20 +24,20 @@ private:
 	//and generate moves for each piece, until we hit the 0.
 
 	//Index to track sliding piece navigation
-	int LoopSlidePce[8] = {
+	const int LoopSlidePce[8] = {
 		wB, wR, wQ, 0, bB, bR, bQ, 0
 	};
-	int LoopSlideIndex[2] = { 0, 4 };
+	const int LoopSlideIndex[2] = { 0, 4 };
 
 	//Index to track non-sliding piece navigation
-	int LoopNonSlidePce[6] = {
+	const int LoopNonSlidePce[6] = {
 		wN, wK, 0, bN, bK, 0
 	};
-	int LoopNonSlideIndex[2] = { 0, 3 };
+	const int LoopNonSlideIndex[2] = { 0, 3 };
 
 	//Directional movements for pieces
 	//This indicates the directions in which each piece can move in, not applicable for pawns
-	int PceDir[13][8] = {
+	const int PceDir[13][8] = {
 		{0,0,0,0,0,0,0},							//Empty
 		{0,0,0,0,0,0,0},							//wP (not applicable)
 		{-8,-19,-21,-12,8,19,21,12},				//wN
