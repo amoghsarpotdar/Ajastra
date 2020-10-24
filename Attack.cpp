@@ -23,12 +23,12 @@ int PieceRookQueen[13] = { FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE,
 int PieceBishopQueen[13] = { FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE };
 
 
-int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos, bitboardProcessor bitboardproc)
+int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos, bitboardProcessor bitboardproc, Board board)
 {
 	int pce, index, t_sq, dir;
 
 	Validator validator;
-	Board board;
+	//Board board;
 
 	ASSERT(validator.SqOnBoard(sq));			//Ensure that square is on board.
 	ASSERT(validator.SideValid(side));			//Ensure that correct side is set to move.

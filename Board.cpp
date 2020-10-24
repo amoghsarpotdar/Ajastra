@@ -309,14 +309,14 @@ int Board::CheckBoard(const S_BOARD* pos, bitboardProcessor bitboardproc)
 	//pcount = CNT(t_pawns[WHITE]);
 	//bitboard board;
 	positionkeyprocessor posKeyProcessor;
+	
 	pcount = bitboardproc.CountBits(t_pawns[WHITE]);
-	
 	ASSERT(pcount == pos->pceNum[wP]);
-	pcount = bitboardproc.CountBits(t_pawns[BLACK]);
 
+	pcount = bitboardproc.CountBits(t_pawns[BLACK]);
 	ASSERT(pcount == pos->pceNum[bP]);
-	pcount = bitboardproc.CountBits(t_pawns[BOTH]);
 	
+	pcount = bitboardproc.CountBits(t_pawns[BOTH]);
 	ASSERT(pcount == (pos->pceNum[bP] + pos->pceNum[wP]));
 
 	//Verify all white pawns on 120 square board match with their relevant position on 64 square board.

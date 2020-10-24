@@ -8,12 +8,63 @@
 #include "Board.h"
 #include "Init.h"
 #include "Attack.h"
+#include "MakeMove.h"
 #include "Move.h"
 #include "MoveGenerator.h"
 
 
 int main(){
 
+	init _initializer;
+	Board theboard;
+	bitboardProcessor bitboardProcessor;
+	S_BOARD board[1] = {};
+	Move mv;
+	MakeMove mkv;
+	MoveGenerator movegenerator;
+
+	_initializer.AllInit();
+	theboard.Parse_Fen(START_FEN, board);
+	theboard.PrintBoard(board);
+
+	S_MOVELIST movelist[1];
+	movegenerator.GenerateAllMoves(board, bitboardProcessor, movelist, theboard);
+	mv.PrintMoveList(movelist);
+
+	getchar();
+
+	int move = 0;
+	bool skip = false;
+	for(int moveNum=0; moveNum < movelist->count; ++moveNum)
+	{
+		move = movelist->moves[moveNum].move;
+		if (!mkv.MakeMoveOnBoard(board, move, bitboardProcessor, theboard))
+		{
+			printf("mkv.MakeMoveOnBoard failed.");
+			continue;
+		}
+
+		printf("\nMADE: %s\n", mv.PrintMove(move));
+		theboard.PrintBoard(board);
+
+		mkv.ReverseMoveOnBoard(board,bitboardProcessor, theboard);
+		printf("\nTAKEN: %s\n", mv.PrintMove(move));
+		theboard.PrintBoard(board);
+
+		getchar();
+	}
+
+}
+
+
+
+
+/**************************TESTS***********************************/
+/*
+ *
+
+void TestCastlingMoveGeneration2()
+{
 	init _initializer;
 	Board theboard;
 	bitboardProcessor bitboardProcessor;
@@ -31,12 +82,6 @@ int main(){
 
 }
 
-
-
-
-/**************************TESTS***********************************/
-/*
- *
 void TestCastlingMoveGeneration1()
 {
 	init _initializer;

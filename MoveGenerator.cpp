@@ -176,7 +176,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 		{
 			if (pos->pieces[F1] == EMPTY && pos->pieces[G1] == EMPTY)
 			{
-				if (!attack.SqAttacked(E1, BLACK, pos, bitboardproc) && !attack.SqAttacked(F1, BLACK, pos, bitboardproc))
+				if (!attack.SqAttacked(E1, BLACK, pos, bitboardproc, board) && !attack.SqAttacked(F1, BLACK, pos, bitboardproc, board))
 				{
 					AddQuietMove(pos, MOVE(E1, G1, EMPTY, EMPTY, MFLAGCA), movelist);
 				}
@@ -188,7 +188,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 		{
 			if (pos->pieces[D1] == EMPTY && pos->pieces[C1] == EMPTY && pos->pieces[B1] == EMPTY)
 			{
-				if (!attack.SqAttacked(E1, BLACK, pos, bitboardproc) && !attack.SqAttacked(D1, BLACK, pos, bitboardproc))
+				if (!attack.SqAttacked(E1, BLACK, pos, bitboardproc, board) && !attack.SqAttacked(D1, BLACK, pos, bitboardproc, board))
 				{
 					AddQuietMove(pos, MOVE(E1, C1, EMPTY, EMPTY, MFLAGCA), movelist);
 				}
@@ -236,7 +236,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 		{
 			if (pos->pieces[F8] == EMPTY && pos->pieces[G8] == EMPTY)
 			{
-				if (!attack.SqAttacked(E8, WHITE, pos, bitboardproc) && !attack.SqAttacked(F8, WHITE, pos, bitboardproc))
+				if (!attack.SqAttacked(E8, WHITE, pos, bitboardproc, board) && !attack.SqAttacked(F8, WHITE, pos, bitboardproc, board))
 				{
 					AddQuietMove(pos, MOVE(E1, G1, EMPTY, EMPTY, MFLAGCA), movelist);
 				}
@@ -248,7 +248,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 		{
 			if (pos->pieces[D8] == EMPTY && pos->pieces[C8] == EMPTY && pos->pieces[B8] == EMPTY)
 			{
-				if (!attack.SqAttacked(E8, WHITE, pos, bitboardproc) && !attack.SqAttacked(D8, WHITE, pos, bitboardproc))
+				if (!attack.SqAttacked(E8, WHITE, pos, bitboardproc, board) && !attack.SqAttacked(D8, WHITE, pos, bitboardproc, board))
 				{
 					AddQuietMove(pos, MOVE(E8, C8, EMPTY, EMPTY, MFLAGCA), movelist);
 				}
@@ -281,7 +281,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboa
 					if (pos->pieces[t_sq] != EMPTY)
 					{
 						//...and if the color of the piece on target square is not same as the color of our piece
-						if (PieceCol[pos->pieces[t_sq]] == side ^ 1)						//0 (black) EXOR 1 is 1 (white), and 1 (white) EXOR 1 is 0 (black)
+						if (PieceCol[pos->pieces[t_sq]] == side^1)						//0 (black) EXOR 1 is 1 (white), and 1 (white) EXOR 1 is 0 (black)
 						{
 							AddCaptureMove(pos, MOVE(sq, t_sq, pos->pieces[t_sq], EMPTY, 0), movelist);
 						}

@@ -13,10 +13,12 @@
 #define HASH_EP (pos->posKey ^= (PieceKeys[EMPTY][(pos->enPass)]))			//Hashing en-passant square
 
 
+
 void MakeMove::ClearPiece(const int sq, S_BOARD* pos)
 {
 	Validator validator;
 	ASSERT(validator.SqOnBoard(sq));							//Ensure that square is on the board
+
 	int pce = pos->pieces[sq];									//Get the piece on this square
 	ASSERT(validator.PieceValid(pce));							//Ensure that this is a valid piece
 
@@ -130,7 +132,7 @@ void MakeMove::MovePiece(int from, int to, S_BOARD* pos)
 	{
 		if(pos->pList[pce][index] == from)
 		{
-			pos->pList[pce][index] = 0;
+			pos->pList[pce][index] = to;
 #ifdef DEBUG
 			t_PieceNum = TRUE;											//If this assert fails, that means our pList array is not aligned with actual piece positions
 #endif
@@ -140,10 +142,9 @@ void MakeMove::MovePiece(int from, int to, S_BOARD* pos)
 	ASSERT(t_PieceNum);
 }
 
-int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, bitboardProcessor bitboardprocessor)
+int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, bitboardProcessor bitboardprocessor, Board board)
 {
 	Validator validator;
-	Board board;
 
 	ASSERT(board.CheckBoard(pos, bitboardprocessor));									//Before we begin, ensure that board state is consistent.
 	int from = FROMSQ(move);
@@ -259,23 +260,22 @@ int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, bitboardProcessor bitboard
 	//Check if the square in which king currently stands is under attack.
 	//If so, this is an illegal move and we need to revert it.
 	Attack attack;
-	if(attack.SqAttacked(pos->KingSq[side], pos->side, pos, bitboardprocessor))
+	if(attack.SqAttacked(pos->KingSq[side], pos->side, pos, bitboardprocessor, board))
 	{
-		//TakeMove(pos);																
+		ReverseMoveOnBoard(pos, bitboardprocessor,board);																
 		return FALSE;
 	}
 	return TRUE;
 }
 
-int MakeMove::ReverseMoveOnBoard(S_BOARD* pos, bitboardProcessor bitboardprocessor)
+int MakeMove::ReverseMoveOnBoard(S_BOARD* pos, bitboardProcessor bitboardprocessor, Board board)
 {
 	Validator validator;
-	Board board;
 	ASSERT(board.CheckBoard(pos,bitboardprocessor));									//Before we begin, ensure the board is in consistent state
 
 	//Decrement the history variables
 	pos->histPly--;																		
-	pos->histPly--;
+	pos->ply--;
 
 	int move = pos->history[pos->histPly].move;											//Get the last move
 	int from = FROMSQ(move);															//Get the 'from' square for this move
@@ -338,6 +338,7 @@ int MakeMove::ReverseMoveOnBoard(S_BOARD* pos, bitboardProcessor bitboardprocess
 		AddPiece(from, pos, (PieceCol[PROMOTED(move)] == WHITE ? wP : bP));
 	}
 	ASSERT(board.CheckBoard(pos, bitboardprocessor));									//Finally, make sure that we leave the board in a valid state
-	
+
+	//return TRUE;
 }
 
