@@ -23,7 +23,7 @@ if (!(n)){	\
 typedef unsigned long long U64;
 
 #define NAME "Ajastra 1.0"
-#define BRD_SQ_NUM 120
+#define BRD_SQ_NUM 120																//Board Square Number - bord with 2 borders on top and bottom and 1 border on left and right.
 
 #define MAXGAMEMOVES 2048
 #define MAXPOSITIONMOVES 256
@@ -43,11 +43,11 @@ typedef unsigned long long U64;
 #define CASTLE2 "3rk2r/8/8/8/8/8/6p1/R3K2R w KQK - 0 1"								//Test position 8
 #define CASTLE3 "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1"	//Test position 9
 
-enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK};
-enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE};
-enum { RANK_1, RANK_2, RANK_3, RANK_4, RANK_5, RANK_6, RANK_7, RANK_8, RANK_NONE};
+enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK};						//Enum value indicates type of piece, e.g. Black King has value of 12.
+enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE};	//Enum value indicates file index
+enum { RANK_1, RANK_2, RANK_3, RANK_4, RANK_5, RANK_6, RANK_7, RANK_8, RANK_NONE};	//Enum value indicates rank index
 
-enum { WHITE, BLACK, BOTH};
+enum { WHITE, BLACK, BOTH};															//White = 0, Black = 1, Both = 2
 
 enum
 {
@@ -59,9 +59,9 @@ enum
 	A6 = 71, B6, C6, D6, E6, F6, G6, H6,
 	A7 = 81, B7, C7, D7, E7, F7, G7, H7,
 	A8 = 91, B8, C8, D8, E8, F8, G8, H8, NO_SQ, OFFBOARD
-};
+};																					//Refer to Diagram 1 in Notes.txt.
 
-enum { FALSE, TRUE};
+enum { FALSE, TRUE};																//FALSE = 0, TRUE = 1
 
 enum {WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8};			//Castling permissions
 
