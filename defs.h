@@ -1,3 +1,4 @@
+// ReSharper disable CppClangTidyCppcoreguidelinesMacroUsage
 #pragma once
 #ifndef _DEFS_H_
 #define _DEFS_H_
@@ -25,7 +26,7 @@ typedef unsigned long long U64;
 #define NAME "Ajastra 1.0"
 #define BRD_SQ_NUM 120																//Board Square Number - bord with 2 borders on top and bottom and 1 border on left and right.
 
-#define MAXGAMEMOVES 2048
+#define MAXGAMEMOVES 2048															//Maximum number of moves a game can be of.
 #define MAXPOSITIONMOVES 256
 
 #define START_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"		//FEN representation of initial position of a chess board.
@@ -63,7 +64,8 @@ enum
 
 enum { FALSE, TRUE};																//FALSE = 0, TRUE = 1
 
-enum {WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8};			//Castling permissions
+//Castling permissions - these will be represented in single byte with 4 bits.
+enum {WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8};		
 
 typedef struct{
 	int move;							//This points to actual move, see GAME MOVE note below
@@ -101,11 +103,11 @@ typedef struct
 
 typedef struct
 {
-	int move;
-	int castlePerm;
-	int enPas;
-	int fiftyMove;
-	U64 posKey;
+	int move;					//Move that needs to be undone
+	int castlePerm;				//Castling permissions before the move
+	int enPas;					//En-passant square (if there was one active)
+	int fiftyMove;				//Status of the fifty move rule at this point
+	U64 posKey;					//Position key of the position to which we want to go to
 }S_UNDO;
 
 typedef struct
@@ -123,22 +125,23 @@ typedef struct
 	int enPass;					//En-passant square (active)
 	int fiftyMovesTracker;		//Counter to trace fifty moves rule
 
-	int ply;					//Indicates half moves in current search
-	int histPly;				//Total half moves in the past. Required to trace threefold repetition.
+	int ply;										//Indicates half moves in current search
+	int histPly;									//Total half moves in the past. Required to trace threefold repetition.
 
-	int castlePerm;				//Indicates castling permissions
+	int castlePerm;									//Indicates castling permissions
 
-	U64 posKey;					//Unique key generated for each position. Useful to track repetitions in position.
-	int pceNum[13];				//Number of pieces on board, indexed by piece type (wP, wN, wB, wR, wQ, wK, bP, wN, wB, wR, wQ)
+	U64 posKey;										//Unique key generated for each position. Useful to track repetitions in position.
+	int pceNum[13];									//Number of pieces on board, indexed by piece type (wP, wN, wB, wR, wQ, wK, bP, wN, wB, wR, wQ)
 
-	int bigPce[2];				//All pieces except pawns
-	int majPce[2];				//Rooks and Queens (white, black)
-	int minPce[2];				//Bishops and Knights (white, black)
-	int material[2];			//'Material' score (white, black)
+	int bigPce[2];									//All pieces except pawns
+	int majPce[2];									//Rooks and Queens (white, black)
+	int minPce[2];									//Bishops and Knights (white, black)
+	int material[2];								//'Material' score (white, black)
 
-	S_UNDO history[MAXGAMEMOVES];
+	//Before making a move the current position info will be stored here
+	S_UNDO history[MAXGAMEMOVES];					//The history of moves can be used to track 3-fold repetition using position keys
 
-	int pList[13][10];			//For each piece type (wP/bP/wR/bR etc.) there can be 10 instances present on the board (promotion included.
+	int pList[13][10];								//For each piece type (wP/bP/wR/bR etc.) there can be 10 instances present on the board (promotion included.
 	
 } S_BOARD;
 

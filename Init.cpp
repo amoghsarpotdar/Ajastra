@@ -1,7 +1,5 @@
 #include "Init.h"
 
-#include <cstdio>
-
 int Sq120ToSq64[BRD_SQ_NUM];
 int Sq64ToSq120[64];
 
@@ -18,24 +16,18 @@ void init::AllInit()
 
 void init::InitFilesRanksBrd()
 {
-	int index = 0;
-	int file = FILE_A;
-	int rank = RANK_1;
-	int sq = A1;
-	int sq64 = 0;
-
-	for(index=0; index<BRD_SQ_NUM; ++index)
+	for(int index = 0; index<BRD_SQ_NUM; ++index)
 	{
 		FilesBrd[index] = OFFBOARD;
 		RanksBrd[index] = OFFBOARD;
 	}
 
 	//Go through all files and ranks, for each square here
-	for(rank=RANK_1; rank<= RANK_8; ++rank)
+	for(int rank = RANK_1; rank<= RANK_8; ++rank)
 	{
-		for(file=FILE_A; file<=FILE_H; ++file)
+		for(int file = FILE_A; file<=FILE_H; ++file)
 		{
-			sq = FR2SQ(file, rank);
+			int sq = FR2SQ(file, rank);
 			FilesBrd[sq] = file;
 			RanksBrd[sq] = rank;
 		}
@@ -60,8 +52,8 @@ void init::InitFilesRanksBrd()
 
 void init::InitHashKeys()
 {
-	int index = 0;
-	int index2 = 0;
+	int index;
+	int index2;
 	for(index=0;index<13;++index)
 	{
 		for(index2=0;index2<120;++index2)
@@ -79,7 +71,7 @@ void init::InitHashKeys()
 
 void init::InitBitMasks()
 {
-	int index = 0;
+	int index;
 
 	//This initializes the bitmask arrays to default 0ULL value.
 	for(index=0; index<64; index++)
@@ -101,10 +93,10 @@ void init::InitBitMasks()
 
 void init::InitSq120To64()
 {
-	int index = 0;
-	int file = FILE_A;
-	int rank = RANK_1;
-	int sq = A1;
+	int index;
+	int file;
+	int rank;
+	int sq;
 	int sq64 = 0;
 
 	for (index = 0; index < BRD_SQ_NUM; ++index)
