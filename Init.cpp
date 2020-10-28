@@ -99,16 +99,30 @@ void init::InitSq120To64()
 	int sq;
 	int sq64 = 0;
 
+	//Initializing 64-square array.
+	//Initialize default value - 65 - this is the invalid value
+	//i.e. should never be returned as a valid square value.
+	//Valid value for a square should range from 0 to 63.
 	for (index = 0; index < BRD_SQ_NUM; ++index)
 	{
 		Sq120ToSq64[index] = 65;
 	}
 
+	//Initializing 120-square array.
+	//The default value indicating off-board square is 120, so
+	//initializing all elements to 120 (OFF_BOARD square).
 	for (index = 0; index < 64; ++index)
 	{
 		Sq64ToSq120[index] = 120;
 	}
 
+	//This loop initializes the 'valid' squares on board.
+	//It iterates through ranks and files, picking every
+	//individual square on a file vs. rank it initializes
+	//relevant square using Sq64ToSq120 for 120 bit array and
+	//Sq120To64 for 64 squares array. Squares initialized in here
+	//are the only valid squares. Remaining squares shall continue
+	//returning their default values initialized in the two loops above.
 	for (rank = RANK_1; rank <= RANK_8; ++rank)
 	{
 		for (file = FILE_A; file <= FILE_H; ++file)
