@@ -111,7 +111,7 @@ void MoveGenerator::AddEnPassantMove(const S_BOARD* position, int move, S_MOVELI
 	movelist->count++;
 }
 
-void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,bitboardProcessor bitboardproc, S_MOVELIST *movelist, Board board)
+void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,BitboardProcessor bitboardproc, S_MOVELIST *movelist, Board board)
 {
 	Validator validator;
 	Attack attack;

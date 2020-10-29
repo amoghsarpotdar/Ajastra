@@ -12,7 +12,7 @@
 
 
 
-class init
+class Init
 {
 public:
 	void AllInit();

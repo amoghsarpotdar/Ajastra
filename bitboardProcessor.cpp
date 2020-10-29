@@ -1,6 +1,6 @@
 #include <cstdio>
-#include "bitboardProcessor.h"
-void bitboardProcessor::PrintBitBoard(U64 bb)
+#include "BitboardProcessor.h"
+void BitboardProcessor::PrintBitBoard(U64 bb)
 {
 	U64 shiftMe = 1ULL;
 
@@ -31,14 +31,14 @@ void bitboardProcessor::PrintBitBoard(U64 bb)
 	}
 }
 
-int bitboardProcessor::CountBits(U64 b)
+int BitboardProcessor::CountBits(U64 b)
 {
 	int r;
 	for (r = 0; b; r++, b &= b - 1);
 	return r;
 }
 
-int bitboardProcessor::PopBit(U64* bb)
+int BitboardProcessor::PopBit(U64* bb)
 {
 	U64 b = *bb ^ (*bb - 1);
 	unsigned int fold = (unsigned)((b & 0xffffffff) ^ (b >> 32));

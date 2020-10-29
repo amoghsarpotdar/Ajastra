@@ -4,7 +4,7 @@
 #include <cstdio>
 
 
-#include "bitboardProcessor.h"
+#include "BitboardProcessor.h"
 #include "Board.h"
 #include "Init.h"
 #include "Attack.h"
@@ -15,9 +15,9 @@
 
 int main(){
 
-	init _initializer;
+	Init _initializer;
 	Board theboard;
-	bitboardProcessor bitboardProcessor;
+	BitboardProcessor bitboardProcessor;
 	S_BOARD board[1] = {};
 	Move mv;
 	MakeMove mkv;
@@ -65,9 +65,9 @@ int main(){
 
 void TestCastlingMoveGeneration2()
 {
-	init _initializer;
+	Init _initializer;
 	Board theboard;
-	bitboardProcessor bitboardProcessor;
+	BitboardProcessor BitboardProcessor;
 	S_BOARD board[1] = {};
 	Move mv;
 	MoveGenerator movegenerator;
@@ -77,16 +77,16 @@ void TestCastlingMoveGeneration2()
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
-	movegenerator.GenerateAllMoves(board, bitboardProcessor, movelist, theboard);
+	movegenerator.GenerateAllMoves(board, BitboardProcessor, movelist, theboard);
 	mv.PrintMoveList(movelist);
 
 }
 
 void TestCastlingMoveGeneration1()
 {
-	init _initializer;
+	Init _initializer;
 	Board theboard;
-	bitboardProcessor bitboardProcessor;
+	BitboardProcessor BitboardProcessor;
 	S_BOARD board[1] = {};
 	Move mv;
 	MoveGenerator movegenerator;
@@ -96,15 +96,15 @@ void TestCastlingMoveGeneration1()
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
-	movegenerator.GenerateAllMoves(board, bitboardProcessor, movelist, theboard);
+	movegenerator.GenerateAllMoves(board, BitboardProcessor, movelist, theboard);
 	//mv.PrintMoveList(movelist);
 }
 
 void TestSldingPieceMoveGenerationWithBishops()
 {
-	init _initializer;
+	Init _initializer;
 	Board theboard;
-	bitboardProcessor bitboardProcessor;
+	BitboardProcessor BitboardProcessor;
 	S_BOARD board[1] = {};
 	Move mv;
 	MoveGenerator movegenerator;
@@ -114,15 +114,15 @@ void TestSldingPieceMoveGenerationWithBishops()
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
-	movegenerator.GenerateAllMoves(board, bitboardProcessor, movelist, theboard);
+	movegenerator.GenerateAllMoves(board, BitboardProcessor, movelist, theboard);
 	//mv.PrintMoveList(movelist);
 }
 
 void TestNonSlidingPieceMoveGenerationWithKnights()
 {
-	init _initializer;
+	Init _initializer;
 	Board theboard;
-	bitboardProcessor bitboardProcessor;
+	BitboardProcessor BitboardProcessor;
 	S_BOARD board[1] = {};
 	Move mv;
 	MoveGenerator movegenerator;
@@ -132,16 +132,16 @@ void TestNonSlidingPieceMoveGenerationWithKnights()
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
-	movegenerator.GenerateAllMoves(board, bitboardProcessor, movelist, theboard);
+	movegenerator.GenerateAllMoves(board, BitboardProcessor, movelist, theboard);
 	//mv.PrintMoveList(movelist);
 
 }
 
 void TestPawnMoveGeneration()
 {
-	init _initializer;
+	Init _initializer;
 	Board theboard;
-	bitboardProcessor bitboardProcessor;
+	BitboardProcessor BitboardProcessor;
 	S_BOARD board[1] = {};
 	Move mv;
 	MoveGenerator movegenerator;
@@ -151,15 +151,15 @@ void TestPawnMoveGeneration()
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
-	movegenerator.GenerateAllMoves(board, bitboardProcessor, movelist, theboard);
+	movegenerator.GenerateAllMoves(board, BitboardProcessor, movelist, theboard);
 	//mv.PrintMoveList(movelist);
 }
 
  void TestGenerateAllMoves1()
 {
-	init _initializer;
+	Init _initializer;
 	Board theboard;
-	bitboardProcessor bitboardProcessor;
+	BitboardProcessor BitboardProcessor;
 	S_BOARD board[1] = {};
 	Move mv;
 	MoveGenerator movegenerator;
@@ -169,13 +169,13 @@ void TestPawnMoveGeneration()
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
-	movegenerator.GenerateAllMoves(board, bitboardProcessor, movelist, theboard);
+	movegenerator.GenerateAllMoves(board, BitboardProcessor, movelist, theboard);
 	mv.PrintMoveList(movelist);
 }
 
 void TestPrintBinary()
 {
-	init _initializer;
+	Init _initializer;
 	Board theboard;
 	bitboard bitBoard;
 	S_BOARD board[1] = {};
@@ -214,7 +214,7 @@ void PrintBinary(int move)
 
 void TestMovePrint()
 {
-	init _initializer;
+	Init _initializer;
 	Board theboard;
 	bitboard bitBoard;
 	S_BOARD board[1] = {};
@@ -236,7 +236,7 @@ void TestMovePrint()
 
 void TestSqAttackedBySide()
 {
-	init _initializer;
+	Init _initializer;
 	Board theboard;
 	bitboard bitBoard;
 	S_BOARD board[1] = {};
@@ -282,7 +282,7 @@ void ShowSqAttackedBySide(const int side, const S_BOARD* pos)
 
 void TestCheckBoardAsserts()
 {
-	init _initializer;
+	Init _initializer;
 	Board theboard;
 	bitboard bitBoard;
 	S_BOARD board[1] = {};
@@ -297,14 +297,14 @@ void TestCheckBoardAsserts()
 
 void TestInitFilesRanksBrd()
 {
-	init _initializer;
+	Init _initializer;
 	Board _board;
 	_initializer.AllInit();
 }
 
 void TestClearMaskForGivenSquare()
 {
-	init _initializer;
+	Init _initializer;
 	bitboard board;
 	_initializer.AllInit();
 	bitboard bitboard;
@@ -322,7 +322,7 @@ void TestClearMaskForGivenSquare()
 
 void TestSetMaskSetsBitForGivenSquare()
 {
-	init _initializer;
+	Init _initializer;
 	bitboard board;
 	_initializer.AllInit();
 	bitboard bitboard;
@@ -342,7 +342,7 @@ void TestSetMaskSetsBitForGivenSquare()
 
 void TestPopBitboardFunctionV2()
 {
-	init _initializer;
+	Init _initializer;
 	bitboard board;
 	_initializer.AllInit();
 
@@ -364,7 +364,7 @@ void TestPopBitboardFunctionV2()
 
 void TestPopBitBoardFunction()
 {
-	init _initializer;
+	Init _initializer;
 	_initializer.AllInit();
 
 	U64 playBitBoard = 0ULL;
@@ -389,7 +389,7 @@ void TestPopBitBoardFunction()
 
 void TestPawnBitBoard()
 {
-	init _initializer;
+	Init _initializer;
 	_initializer.AllInit();
 
 	U64 playBitBoard = 0ULL;
@@ -411,7 +411,7 @@ void TestPawnBitBoard()
 
 void TestBoardPrintingMechanism()
 {
-	init _initializer;
+	Init _initializer;
 	_initializer.AllInit();
 	int index = 0;
 

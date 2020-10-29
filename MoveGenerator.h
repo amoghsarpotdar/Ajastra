@@ -2,7 +2,7 @@
 #ifndef _MOVEGENERATOR_H_
 #define _MOVEGENERATOR_H_
 #include "Attack.h"
-#include "bitboardProcessor.h"
+#include "BitboardProcessor.h"
 #include "Board.h"
 
 
@@ -17,7 +17,7 @@ public:
 	void AddBlackPawnCaptureMove(const S_BOARD* pos, const int from, const int to, const int cap, S_MOVELIST* movelist);
 	void AddBlackPawnMove(const S_BOARD* pos, const int from, const int to, S_MOVELIST* movelist);
 	
-	void GenerateAllMoves(const S_BOARD* pos, bitboardProcessor bitboardproc, S_MOVELIST *movelist, Board board);
+	void GenerateAllMoves(const S_BOARD* pos, BitboardProcessor bitboardproc, S_MOVELIST *movelist, Board board);
 
 private:
 	//When generating moves, depending upon side to move we loop through the array below

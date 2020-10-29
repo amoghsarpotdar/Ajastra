@@ -142,7 +142,7 @@ void MakeMove::MovePiece(int from, int to, S_BOARD* pos)
 	ASSERT(t_PieceNum);
 }
 
-int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, bitboardProcessor bitboardprocessor, Board board)
+int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, BitboardProcessor bitboardprocessor, Board board)
 {
 	Validator validator;
 
@@ -268,7 +268,7 @@ int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, bitboardProcessor bitboard
 	return TRUE;
 }
 
-int MakeMove::ReverseMoveOnBoard(S_BOARD* pos, bitboardProcessor bitboardprocessor, Board board)
+int MakeMove::ReverseMoveOnBoard(S_BOARD* pos, BitboardProcessor bitboardprocessor, Board board)
 {
 	Validator validator;
 	ASSERT(board.CheckBoard(pos,bitboardprocessor));									//Before we begin, ensure the board is in consistent state

@@ -6,7 +6,7 @@ int Sq64ToSq120[64];
 U64 SetMask[64];
 U64 ClearMask[64];
 
-void init::AllInit()
+void Init::AllInit()
 {
 	InitSq120To64();
 	InitBitMasks();
@@ -14,7 +14,7 @@ void init::AllInit()
 	InitFilesRanksBrd();
 }
 
-void init::InitFilesRanksBrd()
+void Init::InitFilesRanksBrd()
 {
 	for(int index = 0; index<BRD_SQ_NUM; ++index)
 	{
@@ -50,7 +50,7 @@ void init::InitFilesRanksBrd()
 }
 
 
-void init::InitHashKeys()
+void Init::InitHashKeys()
 {
 	int index;
 	int index2;
@@ -69,7 +69,7 @@ void init::InitHashKeys()
 }
 
 
-void init::InitBitMasks()
+void Init::InitBitMasks()
 {
 	int index;
 
@@ -91,7 +91,7 @@ void init::InitBitMasks()
 }
 
 
-void init::InitSq120To64()
+void Init::InitSq120To64()
 {
 	int index;
 	int file;

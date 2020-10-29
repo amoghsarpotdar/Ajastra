@@ -258,7 +258,7 @@ void Board::UpdateListsMaterial(S_BOARD* pos)
 }
 
 
-int Board::CheckBoard(const S_BOARD* pos, bitboardProcessor bitboardproc)
+int Board::CheckBoard(const S_BOARD* pos, BitboardProcessor bitboardproc)
 {
 	int t_pceNum[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };
 	int t_bigPce[2] = { 0,0 };

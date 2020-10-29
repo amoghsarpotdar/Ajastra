@@ -4,7 +4,7 @@
 
 #include "defs.h"
 
-class bitboardProcessor
+class BitboardProcessor
 {
 
 private:

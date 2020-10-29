@@ -141,7 +141,8 @@ typedef struct
 	//Before making a move the current position info will be stored here
 	S_UNDO history[MAXGAMEMOVES];					//The history of moves can be used to track 3-fold repetition using position keys
 
-	int pList[13][10];								//For each piece type (wP/bP/wR/bR etc.) there can be 10 instances present on the board (promotion included.
+	//This array contains number of instances of each type of piece on board.
+	int pList[13][10];								//For each piece type (wP/bP/wR/bR etc.) there can be 10 instances present on the board (promotion included.)
 	
 } S_BOARD;
 
