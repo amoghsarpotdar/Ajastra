@@ -24,7 +24,7 @@ int main(){
 	MoveGenerator movegenerator;
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(START_FEN, board);
+	theboard.ParseFen(START_FEN, board);
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
@@ -73,7 +73,7 @@ void TestCastlingMoveGeneration2()
 	MoveGenerator movegenerator;
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(CASTLE3, board);
+	theboard.ParseFen(CASTLE3, board);
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
@@ -92,7 +92,7 @@ void TestCastlingMoveGeneration1()
 	MoveGenerator movegenerator;
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(CASTLE2, board);
+	theboard.ParseFen(CASTLE2, board);
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
@@ -110,7 +110,7 @@ void TestSldingPieceMoveGenerationWithBishops()
 	MoveGenerator movegenerator;
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(BISHOPS, board);
+	theboard.ParseFen(BISHOPS, board);
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
@@ -128,7 +128,7 @@ void TestNonSlidingPieceMoveGenerationWithKnights()
 	MoveGenerator movegenerator;
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(KNIGHTSKINGS, board);
+	theboard.ParseFen(KNIGHTSKINGS, board);
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
@@ -147,7 +147,7 @@ void TestPawnMoveGeneration()
 	MoveGenerator movegenerator;
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(PAWNMOVESW, board);
+	theboard.ParseFen(PAWNMOVESW, board);
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
@@ -165,7 +165,7 @@ void TestPawnMoveGeneration()
 	MoveGenerator movegenerator;
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(PAWNMOVESB, board);
+	theboard.ParseFen(PAWNMOVESB, board);
 	theboard.PrintBoard(board);
 
 	S_MOVELIST movelist[1];
@@ -220,7 +220,7 @@ void TestMovePrint()
 	S_BOARD board[1] = {};
 
 	_initializer.AllInit();
-	//theboard.Parse_Fen(FENQUEENSATTACKINGEACHOTHER, board);
+	//theboard.ParseFen(FENQUEENSATTACKINGEACHOTHER, board);
 	theboard.PrintBoard(board);
 
 	int move = 0, from = 6, to = 12;
@@ -242,7 +242,7 @@ void TestSqAttackedBySide()
 	S_BOARD board[1] = {};
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(FENQUEENSATTACKINGEACHOTHER, board);
+	theboard.ParseFen(FENQUEENSATTACKINGEACHOTHER, board);
 	theboard.PrintBoard(board);
 
 	printf("\n\nWhite Attacking:\n");
@@ -288,7 +288,7 @@ void TestCheckBoardAsserts()
 	S_BOARD board[1] = {};
 
 	_initializer.AllInit();
-	theboard.Parse_Fen(FEN4, board);
+	theboard.ParseFen(FEN4, board);
 	theboard.PrintBoard(board);
 	printf("\nForced asserts...\n");
 	board->pceNum[wP]--;

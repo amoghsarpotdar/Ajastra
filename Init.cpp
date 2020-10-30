@@ -22,7 +22,9 @@ void Init::InitFilesRanksBrd()
 		RanksBrd[index] = OFFBOARD;
 	}
 
-	//Go through all files and ranks, for each square here
+	//Go through all files and ranks, for each square translate
+	//it into its address under 120 square board.
+	//Associate relevant file and rank name with that square.
 	for(int rank = RANK_1; rank<= RANK_8; ++rank)
 	{
 		for(int file = FILE_A; file<=FILE_H; ++file)
@@ -33,7 +35,8 @@ void Init::InitFilesRanksBrd()
 		}
 	}
 
-	/*printf("FilesBrd\n");
+	/*Test Code - not required in actual program.
+	 *printf("FilesBrd\n");
 	for(index=0; index<BRD_SQ_NUM; ++index)
 	{
 		if (index % 10 == 0 && index != 0) printf("\n");

@@ -151,7 +151,7 @@
   <ItemGroup>
     <ClCompile Include="Ajastra.cpp" />
     <ClCompile Include="Attack.cpp" />
-    <ClCompile Include="bitboardProcessor.cpp" />
+    <ClCompile Include="BitboardProcessor.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Init.cpp" />
     <ClCompile Include="MakeMove.cpp" />
@@ -162,7 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attack.h" />
-    <ClInclude Include="bitboardProcessor.h" />
+    <ClInclude Include="BitboardProcessor.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="defs.h" />
     <ClInclude Include="Init.h" />

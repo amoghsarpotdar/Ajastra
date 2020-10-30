@@ -39,10 +39,10 @@
     <ClCompile Include="Validator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bitboardProcessor.cpp">
+    <ClCompile Include="MakeMove.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MakeMove.cpp">
+    <ClCompile Include="BitboardProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,10 +71,10 @@
     <ClInclude Include="Validator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bitboardProcessor.h">
+    <ClInclude Include="MakeMove.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MakeMove.h">
+    <ClInclude Include="BitboardProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

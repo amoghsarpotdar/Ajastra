@@ -167,15 +167,21 @@ extern U64 PieceKeys[13][120];						//Dimension[0] is for piece, dimension[1] is
 extern U64 sideKey;									//
 extern U64 castleKeys[16];							//Four bits to represent 4 castling ways (2 ways for each side).
 
-extern char PceChar[];
-extern char SideChar[];
-extern char RankChar[];
-extern char FileChar[];
+//Arrays below are used for printing board position
+//on screen next to the bitboard layout.
+extern char PceChar[];								//.PNBRQKpnbrqk - Pieces on board
+extern char SideChar[];								//wb- Side to move
+extern char RankChar[];								//123456789 - Rank index
+extern char FileChar[];								//abcdefgh- File index
 
-extern int PieceBig[13];
-extern int PieceMaj[13];
-extern int PieceMin[13];
-extern int PieceVal[13];
+//Arrays below are used to track various properties belonging to a piece.
+//We need 14 elements because we are tracking 6 original pieces + 8 potential
+//new pieces which can be obtained by pawn promotions.
+//Note that we can not promote the pawn to a King.
+extern int PieceBig[13];							//Indicates if piece is 'big' (queen)
+extern int PieceMaj[13];							//Indicates if piece is 'major' (Rook)
+extern int PieceMin[13];							//Indicates if piece is minor (knight/bishop)
+extern int PieceVal[13];							//Indicates relevant piece value
 extern int PieceCol[13];							//Indicates color of a given piece
 extern int PiecePawn[13];							//Indicates if a given piece is a pawn
 

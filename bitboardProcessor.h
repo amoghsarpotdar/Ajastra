@@ -4,6 +4,11 @@
 
 #include "defs.h"
 
+/// <summary>
+/// This class provides framework to track pawns on a board using bitboard
+/// container. Note that we are using bitboards only to deal with pawns, not
+/// pieces. The pieces are being stored in array p_List defined in defs.h.
+/// </summary>
 class BitboardProcessor
 {
 
