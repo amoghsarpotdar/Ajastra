@@ -23,6 +23,16 @@ int PieceRookQueen[13] = { FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE,
 int PieceBishopQueen[13] = { FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE };
 
 
+/// <summary>
+/// This function checks if there are any inbound attacks on a given square.
+/// Looks for attack by pawns and pieces.
+/// </summary>
+/// <param name="sq">Target square to be checked</param>
+/// <param name="side">Side to move</param>
+/// <param name="pos">Board position to be checked</param>
+/// <param name="bitboardproc">bitboard processor object</param>
+/// <param name="board">Board object</param>
+/// <returns></returns>
 int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos, BitboardProcessor bitboardproc, Board board)
 {
 	int pce, index, t_sq, dir;
@@ -34,7 +44,7 @@ int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos, Bitboar
 	ASSERT(validator.SideValid(side));			//Ensure that correct side is set to move.
 	ASSERT(board.CheckBoard(pos, bitboardproc));
 
-	//Check attacks by pawns
+	//Check attacks by pawns on this square.
 	if(side == WHITE)
 	{
 		if(pos->pieces[sq-11] == wP || pos->pieces[sq-9] == wP)
@@ -50,7 +60,7 @@ int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos, Bitboar
 	//Check attacks by knights
 	for(index=0;index<8;++index)
 	{
-		pce = pos->pieces[sq + KnDir[index]];				//Get the piece on KnDir[index] position from piece array
+		pce = pos->pieces[sq + KnDir[index]];					//Get the piece on KnDir[index] position from piece array
 
 		if (pce != EMPTY && pce != OFFBOARD) {
 			if (IsKn(pce) && PieceCol[pce] == side)				//If the piece is a knight and of color we are looking for
@@ -60,7 +70,7 @@ int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos, Bitboar
 		}
 	}
 
-	//Check attacks by rooks and queens (straight line attacks)
+	//Check attacks by Rooks and Queens (straight line attacks)
 	for(index=0; index<4; ++index)
 	{
 		dir = RkDir[index];
@@ -68,6 +78,8 @@ int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos, Bitboar
 		pce = pos->pieces[t_sq];
 		while(pce != OFFBOARD)
 		{
+			//If we hit a piece in our path, we have to break out of this loop.
+			//Only Knights can jump over a piece, not Rooks or Queens.
 			if(pce!=EMPTY)
 			{
 				if(IsRQ(pce) && PieceCol[pce] == side)
@@ -81,7 +93,7 @@ int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos, Bitboar
 		}
 	}
 
-	//Check attacks by bishops and queens (diagonal attacks)
+	//Check attacks by Bishops and Queens (diagonal attacks)
 	for(index=0; index<4; ++index)
 	{
 		dir = BiDir[index];
@@ -112,6 +124,7 @@ int Attack::SqAttacked(const int sq, const int side, const S_BOARD* pos, Bitboar
 		}
 	}
 
+	//If we reach this point, that means the square in question isn ot being attacked.
 	return FALSE;
 }
 

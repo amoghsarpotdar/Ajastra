@@ -78,7 +78,8 @@ typedef struct
 	int count;
 }S_MOVELIST;
 
-/*GAME MOVE*/
+////////////////////////////MOVE GENERATION//////////////////////////////
+//[V24 and V25]
 /*
  *	0000	0000	0000	0000	0000	0111	1111	-> From				0x7F
  *	0000	0000	0000	0000	1111	1000	0000	-> To				>>7, 0x3F
@@ -89,6 +90,7 @@ typedef struct
  *	0001	0000	0000	0000	0000	0000	0000	-> Castle			0x1000000
  */
 
+//Refer to the Notes.txt, Move Generation section.
 #define FROMSQ(m) ((m) & 0x7F)
 #define TOSQ(m) (((m)>>7) & 0x7F)
 #define CAPTURED(m) (((m)>>14) & 0xF)
@@ -100,6 +102,8 @@ typedef struct
 
 #define MFLAGCAP 0x7c000
 #define MFLAGPROM 0xF00000
+
+////////////////////////////MOVE GENERATION//////////////////////////////
 
 typedef struct
 {
@@ -189,11 +193,11 @@ extern int FilesBrd[BRD_SQ_NUM];
 extern int RanksBrd[BRD_SQ_NUM];
 
 //These arrays indicate what kind of piece it is, that is attacking on a given square X
-extern int PieceKnight[13];
-extern int PieceKing[13];
-extern int PieceRookQueen[13];
-extern int PieceBishopQueen[13];
-extern int PieceSlides[13];
+extern int PieceKnight[13];							//Is the attacking piece a knight
+extern int PieceKing[13];							//Is the attacking piece a King
+extern int PieceRookQueen[13];						//Is the attacking piece a Queen
+extern int PieceBishopQueen[13];					//Is the attacking piece a Bishop or Queen (diagonal attack)
+extern int PieceSlides[13];							//Is the attacking piece a sliding piece (Rook or Queen)
 
 #define IsBQ(p) (PieceBishopQueen[(p)])
 #define IsRQ(p) (PieceRookQueen[(p)])

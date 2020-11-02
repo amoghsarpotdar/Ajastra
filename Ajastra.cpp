@@ -173,6 +173,7 @@ void TestPawnMoveGeneration()
 	mv.PrintMoveList(movelist);
 }
 
+[V26]
 void TestPrintBinary()
 {
 	Init _initializer;
@@ -199,6 +200,7 @@ void TestPrintBinary()
 	printf("Algebraic move:%s\n", mv.PrintMove(move));
 }
 
+[V26]
 void PrintBinary(int move)
 {
 	int index = 0;
@@ -212,6 +214,7 @@ void PrintBinary(int move)
 	printf("\n");
 }
 
+[V26]
 void TestMovePrint()
 {
 	Init _initializer;
@@ -252,6 +255,12 @@ void TestSqAttackedBySide()
 	ShowSqAttackedBySide(BLACK, board);
 }
 
+//TODO : Generate more test cases based on various types of pieces.
+//Convert these functions to unit tests.
+//Possible test cases are -
+//1. Squares attacked by King, Queen, Knight, Bishop, Rook, Pawn
+//2. Squares attacked by pieces with their own pawn in path
+//3. Squares attacked by pieces with opposite color pawn in path
 void ShowSqAttackedBySide(const int side, const S_BOARD* pos)
 {
 	int rank = 0;
