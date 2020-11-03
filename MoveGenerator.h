@@ -38,25 +38,25 @@ private:
 	//Directional movements for pieces
 	//This indicates the directions in which each piece can move in, not applicable for pawns
 	const int PceDir[13][8] = {
-		{0,0,0,0,0,0,0},							//Empty
-		{0,0,0,0,0,0,0},							//wP (not applicable)
-		{-8,-19,-21,-12,8,19,21,12},				//wN
-		{-9,-11,11,9,0,0,0,0},						//wB
-		{-1,-10,1,10,0,0,0,0},						//wR
-		{-1,-10,1,10,-9,-11,11,9},					//wQ
-		{-1,-10,1,10,-9,-11,11,9},					//wK?
-		{0,0,0,0,0,0,0},							//bP (not applicable)
-		{-8,-19,-21,-12,8,19,21,12},				//bN
-		{-9,-11,11,9,0,0,0,0},						//bB
-		{-1,-10,1,10,0,0,0,0},						//bR
-		{-1,-10,1,10,-9,-11,11,9},					//bQ
-		{-1,-10,1,10,-9,-11,11,9}					//bK?
+		{0, 0, 0, 0, 0, 0, 0},							//Empty
+		{0, 0, 0, 0, 0, 0, 0},							//wP (not applicable)
+		{-8, -19, -21, -12, 8, 19, 21, 12},				//wN
+		{-9, -11, 11, 9, 0, 0, 0, 0},					//wB
+		{-1, -10, 1, 10, 0, 0, 0, 0},					//wR
+		{-1, -10, 1, 10, -9, -11, 11, 9},				//wQ
+		{-1, -10, 1, 10, -9, -11, 11, 9},				//wK?
+		{0, 0, 0, 0, 0, 0, 0},							//bP (not applicable)
+		{-8, -19, -21, -12, 8, 19, 21, 12},				//bN
+		{-9, -11, 11, 9, 0, 0, 0, 0},					//bB
+		{-1, -10, 1, 10, 0, 0, 0, 0},					//bR
+		{-1, -10, 1, 10, -9, -11, 11, 9},				//bQ
+		{-1, -10, 1, 10, -9, -11, 11, 9}				//bK?
 	};
 
 	//This array indicates number of directions applicable to each piece type, not applicable for pawns
 	//EMPTY,wP(not applicable),wN,wB,wR,wQ,wK,bP(not applicable),bN,bB,bR,bQ,bK
 	int NumDir[13] = {
-		0,0,8,4,4,8,8,0,8,4,4,8,8
+		0, 0, 8, 4, 4, 8, 8, 0, 8, 4, 4, 8, 8
 	};
 };
 

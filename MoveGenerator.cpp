@@ -278,7 +278,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,BitboardProcessor bitboa
 				AddBlackPawnCaptureMove(pos, sq, sq - 9, pos->pieces[sq - 9], movelist);
 			}
 
-			if(!SQOFFBOARD(sq-11) && PieceCol[pos->pieces[sq - 11]] == WHITE)
+			if(!SQOFFBOARD(sq - 11) && PieceCol[pos->pieces[sq - 11]] == WHITE)
 			{
 				AddBlackPawnCaptureMove(pos, sq, sq - 11, pos->pieces[sq - 11], movelist);
 			}
@@ -344,7 +344,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,BitboardProcessor bitboa
 					if (pos->pieces[t_sq] != EMPTY)
 					{
 						//...and if the color of the piece on target square is not same as the color of our piece
-						if (PieceCol[pos->pieces[t_sq]] == side^1)						//0 (black) EXOR 1 is 1 (white), and 1 (white) EXOR 1 is 0 (black)
+						if (PieceCol[pos->pieces[t_sq]] == (side^1))						//0 (black) EXOR 1 is 1 (white), and 1 (white) EXOR 1 is 0 (black)
 						{
 							AddCaptureMove(pos, MOVE(sq, t_sq, pos->pieces[t_sq], EMPTY, 0), movelist);
 						}
@@ -387,7 +387,7 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,BitboardProcessor bitboa
 				if(pos->pieces[t_sq] != EMPTY)
 				{
 					//...and if the color of the piece on target square is not same as the color of our piece
-					if(PieceCol[pos->pieces[t_sq]] == side ^ 1)						//0 (black) EXOR 1 is 1 (white), and 1 (white) EXOR 1 is 0 (black)
+					if(PieceCol[pos->pieces[t_sq]] == (side ^ 1))						//0 (black) EXOR 1 is 1 (white), and 1 (white) EXOR 1 is 0 (black)
 					{
 						AddCaptureMove(pos, MOVE(sq, t_sq, pos->pieces[t_sq], EMPTY, 0), movelist);
 					}

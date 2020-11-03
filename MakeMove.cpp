@@ -13,7 +13,12 @@
 #define HASH_EP (pos->posKey ^= (PieceKeys[EMPTY][(pos->enPass)]))			//Hashing en-passant square
 
 
-
+/// <summary>
+/// This function removes a given piece/pawn from our in-memory representation of bitboard.
+/// It also removes relevant piece/pawn from the piece type arrays.
+/// </summary>
+/// <param name="sq"></param>
+/// <param name="pos"></param>
 void MakeMove::ClearPiece(const int sq, S_BOARD* pos)
 {
 	Validator validator;
@@ -48,7 +53,7 @@ void MakeMove::ClearPiece(const int sq, S_BOARD* pos)
 
 	//Now we update the piece list that reflects number of pieces on board of a given type
 	//Look for the index of the square, that matches square supplied in argument 'sq'
-	for(index=0; index<pos->pceNum[pce];++index)
+	for(index = 0; index < pos->pceNum[pce]; ++index)
 	{
 		if(pos->pList[pce][index] == sq)
 		{
@@ -60,9 +65,15 @@ void MakeMove::ClearPiece(const int sq, S_BOARD* pos)
 	ASSERT(t_pceNum != -1);
 
 	pos->pceNum[pce]--;													//Since we are removing a piece, update the value to reflect change in count
-	pos->pList[pce][t_pceNum] = pos->pList[pce][pos->pceNum[pce]];		//Refer to V39 if this becomes confusing
+	pos->pList[pce][t_pceNum] = pos->pList[pce][pos->pceNum[pce]];		//Refer to [V39] if this becomes confusing
 }
 
+/// <summary>
+/// Adds piece/pawn to specific square on a given board.
+/// </summary>
+/// <param name="sq">Integer pointing to target square on 120 index board.</param>
+/// <param name="pos">Pointer to S_BOARD structure that contains our in-memory representation of board</param>
+/// <param name="pce">Integer representing piece being added</param>
 void MakeMove::AddPiece(const int sq, S_BOARD  *pos, const int pce)
 {
 	Validator validator;
@@ -95,7 +106,14 @@ void MakeMove::AddPiece(const int sq, S_BOARD  *pos, const int pce)
 	
 }
 
-void MakeMove::MovePiece(int from, int to, S_BOARD* pos)
+/// <summary>
+/// Moves the piece from source to target square.
+/// Updates the piece/pawn position on bitboard.
+/// </summary>
+/// <param name="from">Square from which the piece is to be moved</param>
+/// <param name="to">Square to which the piece is to be moved</param>
+/// <param name="pos">Pointer to S_BOARD structure, which is our in-memory bitboard representation.</param>
+void MakeMove::MovePiece(const int from, const int to, S_BOARD* pos)
 {
 	//Make sure that both squares are 'on board'
 	Validator validator;
@@ -142,6 +160,14 @@ void MakeMove::MovePiece(int from, int to, S_BOARD* pos)
 	ASSERT(t_PieceNum);
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="move"></param>
+/// <param name="bitboardprocessor"></param>
+/// <param name="board"></param>
+/// <returns></returns>
 int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, BitboardProcessor bitboardprocessor, Board board)
 {
 	Validator validator;

@@ -57,7 +57,6 @@ void Board::ResetBoard(S_BOARD* pos)
 		pos->majPce[index] = 0;
 		pos->minPce[index] = 0;
 		pos->material[index] = 0;
-		pos->pawns[index] = 0ULL;			//??????????Do we need this??????????
 	}
 
 	//The pawns array contains three pawn types -
