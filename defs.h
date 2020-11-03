@@ -27,7 +27,7 @@ typedef unsigned long long U64;
 #define BRD_SQ_NUM 120																//Board Square Number - bord with 2 borders on top and bottom and 1 border on left and right.
 
 #define MAXGAMEMOVES 2048															//Maximum number of moves a game can be of.
-#define MAXPOSITIONMOVES 256
+#define MAXPOSITIONMOVES 256														//Maximum number of moves a position can have (candidate moves)
 
 #define START_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"		//FEN representation of initial position of a chess board.
 #define FEN2 "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"			//FEN representation of position after 1.e4. Used for testing only.
@@ -71,6 +71,7 @@ typedef struct{
 	int move;							//This points to actual move, see GAME MOVE note below
 	int score;							//Will be used for move ordering
 }S_MOVE;
+
 
 typedef struct
 {

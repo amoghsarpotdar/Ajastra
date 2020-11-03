@@ -10,6 +10,12 @@
 //This checks if a square is off board or not.
 #define SQOFFBOARD(sq) (FilesBrd[(sq)] == OFFBOARD)
 
+/// <summary>
+/// This function adds a quiet move to move list.
+/// </summary>
+/// <param name="position">Constant pointer to S_BOARD structure variable</param>
+/// <param name="move">Integer specifying move details</param>
+/// <param name="movelist">Pointer to list of moves</param>
 void MoveGenerator::AddQuietMove(const S_BOARD* position, int move, S_MOVELIST* movelist)
 {
 	movelist->moves[movelist->count].move = move;
@@ -17,6 +23,12 @@ void MoveGenerator::AddQuietMove(const S_BOARD* position, int move, S_MOVELIST* 
 	movelist->count++;
 }
 
+/// <summary>
+/// This function adds a capture move to move list.
+/// </summary>
+/// <param name="position">Constant pointer to S_BOARD structure variable</param>
+/// <param name="move">Integer specifying move details</param>
+/// <param name="movelist">Pointer to list of moves</param>
 void MoveGenerator::AddCaptureMove(const S_BOARD* position, int move, S_MOVELIST* movelist)
 {
 	movelist->moves[movelist->count].move = move;
@@ -24,6 +36,29 @@ void MoveGenerator::AddCaptureMove(const S_BOARD* position, int move, S_MOVELIST
 	movelist->count++;
 }
 
+/// <summary>
+/// This function adds En-passant move to move list.
+/// </summary>
+/// <param name="position">Constant pointer to S_BOARD structure variable</param>
+/// <param name="move">Integer specifying move details</param>
+/// <param name="movelist">Pointer to list of moves</param>
+void MoveGenerator::AddEnPassantMove(const S_BOARD* position, int move, S_MOVELIST* movelist)
+{
+	movelist->moves[movelist->count].move = move;
+	movelist->moves[movelist->count].score = 0;
+	movelist->count++;
+}
+
+/// <summary>
+/// Adds possible White Pawn moves to the move list.
+/// If Pawn is moving from 7th square to 8th, it will be promoted to either a Queen,
+/// Rook, Bishop or a Knight.
+/// </summary>
+/// <param name="pos">Constant pointer to S_BOARD structure variable</param>
+/// <param name="from">Square from which to move</param>
+/// <param name="to">Square to which to move</param>
+/// <param name="cap"></param>
+/// <param name="movelist">Pointer to list of moves</param>
 void MoveGenerator::AddWhitePawnCaptureMove(const S_BOARD* pos, const int from, const int to, const int cap, S_MOVELIST* movelist)
 {
 	Validator validator;
@@ -44,6 +79,16 @@ void MoveGenerator::AddWhitePawnCaptureMove(const S_BOARD* pos, const int from, 
 	}
 }
 
+/// <summary>
+/// Adds possible capture moves for Black pawn to moves list.
+/// If Pawn is moving from 7th square to 8th, it will be promoted to either a Queen,
+/// Rook, Bishop or a Knight.
+/// </summary>
+/// <param name="pos">Constant pointer to S_BOARD structure</param>
+/// <param name="from">Square from which to move</param>
+/// <param name="to">Square to which to move</param>
+/// <param name="cap"></param>
+/// <param name="movelist">Pointer to S_MOVELIST structure</param>
 void MoveGenerator::AddBlackPawnCaptureMove(const S_BOARD* pos, const int from, const int to, const int cap, S_MOVELIST* movelist)
 {
 	Validator validator;
@@ -65,6 +110,13 @@ void MoveGenerator::AddBlackPawnCaptureMove(const S_BOARD* pos, const int from, 
 	}
 }
 
+/// <summary>
+/// Adds a possible White pawn move to pawn moves list.
+/// </summary>
+/// <param name="pos">Constant pointer to S_BOARD structure</param>
+/// <param name="from">Square from which to move</param>
+/// <param name="to">Square to which to move</param>
+/// <param name="movelist">Pointer to S_MOVELIST structure</param>
 void MoveGenerator::AddWhitePawnMove(const S_BOARD* pos, const int from, const int to, S_MOVELIST* movelist)
 {
 	Validator validator;
@@ -84,6 +136,13 @@ void MoveGenerator::AddWhitePawnMove(const S_BOARD* pos, const int from, const i
 	}
 }
 
+/// <summary>
+/// Adds a possible Black pawn move to pawn moves list.
+/// </summary>
+/// <param name="pos">Constant pointer to S_BOARD structure</param>
+/// <param name="from">Square from which to move</param>
+/// <param name="to">Square to which to move</param>
+/// <param name="movelist">Pointer to S_MOVELIST structure</param>
 void MoveGenerator::AddBlackPawnMove(const S_BOARD* pos, const int from, const int to, S_MOVELIST* movelist)
 {
 	Validator validator;
@@ -104,13 +163,16 @@ void MoveGenerator::AddBlackPawnMove(const S_BOARD* pos, const int from, const i
 	}
 }
 
-void MoveGenerator::AddEnPassantMove(const S_BOARD* position, int move, S_MOVELIST* movelist)
-{
-	movelist->moves[movelist->count].move = move;
-	movelist->moves[movelist->count].score = 0;
-	movelist->count++;
-}
 
+
+/// <summary>
+/// TODO : This function needs refactoring into smaller parts
+/// 
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="bitboardproc"></param>
+/// <param name="movelist"></param>
+/// <param name="board"></param>
 void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,BitboardProcessor bitboardproc, S_MOVELIST *movelist, Board board)
 {
 	Validator validator;
@@ -194,7 +256,8 @@ void MoveGenerator::GenerateAllMoves(const S_BOARD* pos,BitboardProcessor bitboa
 				}
 			}
 		}
-	}else
+	}
+	else
 	{
 		for(pceNum = 0; pceNum < pos->pceNum[bP]; ++pceNum)
 		{
