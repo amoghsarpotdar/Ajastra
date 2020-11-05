@@ -161,12 +161,12 @@ void MakeMove::MovePiece(const int from, const int to, S_BOARD* pos)
 }
 
 /// <summary>
-/// 
+/// Makes a move on S_BOARD structure instance - board representation in memory. 
 /// </summary>
-/// <param name="pos"></param>
-/// <param name="move"></param>
-/// <param name="bitboardprocessor"></param>
-/// <param name="board"></param>
+/// <param name="pos">Pointer to S_BOARD structure</param>
+/// <param name="move">Integer representing move to be made</param>
+/// <param name="bitboardprocessor">Bitboard processor instance which will be used to perform bitboard processing operations</param>
+/// <param name="board">Board object instance, used for performing validations on our board state</param>
 /// <returns></returns>
 int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, BitboardProcessor bitboardprocessor, Board board)
 {
@@ -185,49 +185,54 @@ int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, BitboardProcessor bitboard
 	pos->history[pos->histPly].posKey = pos->posKey;									//Set current positionkey in history
 
 	
-	if(move & MFLAGEP)																	//If the last move enabled en-passant possibility, then
+	if(move & MFLAGEP)												//If the last move enabled en-passant possibility, then
 	{
-		if(side == WHITE)
-		{
-			ClearPiece(to - 10, pos);
+		if(side == WHITE)											//If it is Black capturing the pawn then we are capturing on White's								
+		{															//3'rd rank with En-Passant. Remove the pawn on fourth row.
+			ClearPiece(to - 10, pos);								//We obtain relevant square by deducing 10 squares.
+			//Q : How can the fixed '-10' formula deal with en-passant on either side? i.e. if we reduce
+			//10 form square index, for en-passant on left square, how do we deal with en-passant on the right wing?
 		}else
 		{
-			ClearPiece(to + 10, pos);
+			ClearPiece(to + 10, pos);								//If it is White capturing the pawn, then number of squares
+			//go in opposite direction.
 		}
 	}
 	else if(move & MFLAGCA)																//If the last move sets up castling possibility, then
 	{
 		switch(to)
 		{
-		case C1:
-			MovePiece(A1, D1, pos);
+		case C1:													//If the target square is C1
+			MovePiece(A1, D1, pos);							//then move the Rook from A1 to D1
 			break;
-		case C8:
-			MovePiece(A8, D8, pos);
+		case C8:													//If the target square is C8
+			MovePiece(A8, D8, pos);							//then move the Rook from A8 to D8
 			break;
-		case G1:
-			MovePiece(H1, F1, pos);
+		case G1:													//If the target square is G1
+			MovePiece(H1, F1, pos);							//then move the Rook from H1 to F1
+			break;													
+		case G8:													//If the target square is G8
+			MovePiece(H8, F8, pos);							//then move the piece from H8 to F8
 			break;
-		case G8:
-			MovePiece(H8, F8, pos);
-			break;
-		default: ASSERT(FALSE); break;													//If this assert fails, it indicates we have wrong 'to' square marked for castling
+		default: ASSERT(FALSE); break;								//If this assert fails, it indicates we have wrong 'to' square marked for castling
 		}
 	}
 
-	if (pos->enPass != NO_SQ) HASH_EP;
-	HASH_CA;
+	if (pos->enPass != NO_SQ) HASH_EP;								//If we have a current en-passant square then hash it out
+	HASH_CA;														//Hash out castling permissions
 
 	pos->history[pos->histPly].move = move;
 	pos->history[pos->histPly].fiftyMove = pos->fiftyMovesTracker;
 	pos->history[pos->histPly].enPas = pos->enPass;
 	pos->history[pos->histPly].castlePerm = pos->castlePerm;
 
+	//If the Rook or King has moved from its original location then we need to update
+	//castling permissions.
 	pos->castlePerm &= CastlePerm[from];
 	pos->castlePerm &= CastlePerm[to];
 	pos->enPass = NO_SQ;
 
-	HASH_CA;
+	HASH_CA;														//Hash in the new castling permissions state.
 
 	//If a piece was captured, we need to reset the 50 moves rule tracker
 	int captured = CAPTURED(move);														//Get the piece captured, if any
@@ -240,6 +245,7 @@ int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, BitboardProcessor bitboard
 		pos->fiftyMovesTracker = 0;														//Reset the 50 moves tracker since a piece has been captured
 	}
 
+	//Increament the half move counter and move counter.
 	pos->histPly++;
 	pos->ply++;
 
@@ -249,11 +255,11 @@ int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, BitboardProcessor bitboard
 		pos->fiftyMovesTracker = 0;														//Reset the fifty move tracker according to chess rule
 		if(move & MFLAGPS)																//Check if this move was a pawn start move
 		{
-			if(side == WHITE)
+			if(side == WHITE)															//If last move was White's move
 			{
 				pos->enPass = from + 10;
 				ASSERT(RanksBrd[pos->enPass] == RANK_3);								//Ensure that en-passent square is on rank 3
-			}else
+			}else																		//Else if it was Black's move
 			{
 				pos->enPass = from - 10;
 				ASSERT(RanksBrd[pos->enPass] == RANK_6);								//Ensure that en-passent square is on rank 6
