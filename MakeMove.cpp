@@ -161,7 +161,9 @@ void MakeMove::MovePiece(const int from, const int to, S_BOARD* pos)
 }
 
 /// <summary>
-/// Makes a move on S_BOARD structure instance - board representation in memory. 
+/// Makes a move on S_BOARD structure instance - board representation in memory.
+/// TODO : We need to break this into smaller functions.
+/// TODO : Add unit tests for this function.
 /// </summary>
 /// <param name="pos">Pointer to S_BOARD structure</param>
 /// <param name="move">Integer representing move to be made</param>
@@ -300,9 +302,17 @@ int MakeMove::MakeMoveOnBoard(S_BOARD* pos, int move, BitboardProcessor bitboard
 	return TRUE;
 }
 
+/// <summary>
+/// Reverses the move that was made on board.
+/// </summary>
+/// <param name="pos"></param>
+/// <param name="bitboardprocessor"></param>
+/// <param name="board"></param>
+/// <returns></returns>
 int MakeMove::ReverseMoveOnBoard(S_BOARD* pos, BitboardProcessor bitboardprocessor, Board board)
 {
 	Validator validator;
+
 	ASSERT(board.CheckBoard(pos,bitboardprocessor));									//Before we begin, ensure the board is in consistent state
 
 	//Decrement the history variables
@@ -325,7 +335,7 @@ int MakeMove::ReverseMoveOnBoard(S_BOARD* pos, BitboardProcessor bitboardprocess
 
 	if (pos->enPass != NO_SQ) HASH_EP;													//If en-passent square is note empty then hash it
 
-	//Process the casting state
+	//Process the castling state
 	HASH_CA;																			
 
 	pos->side ^= 1;
@@ -360,6 +370,13 @@ int MakeMove::ReverseMoveOnBoard(S_BOARD* pos, BitboardProcessor bitboardprocess
 	if(PieceKing[pos->pieces[from]])
 	{
 		pos->KingSq[pos->side] = from;
+	}
+
+	int captured = CAPTURED(move);
+	if(captured != EMPTY)
+	{
+		ASSERT(validator.PieceValid(captured));
+		AddPiece(to, pos, captured);
 	}
 
 	//If the last move was promotion, then we need to roll it back as well.
