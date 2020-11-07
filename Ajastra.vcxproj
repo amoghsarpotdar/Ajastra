@@ -157,6 +157,7 @@
     <ClCompile Include="MakeMove.cpp" />
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="MoveGenerator.cpp" />
+    <ClCompile Include="Perft.cpp" />
     <ClCompile Include="positionkeyprocessor.cpp" />
     <ClCompile Include="Validator.cpp" />
   </ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="MakeMove.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="MoveGenerator.h" />
+    <ClInclude Include="Perft.h" />
     <ClInclude Include="positionkeyprocessor.h" />
     <ClInclude Include="Validator.h" />
   </ItemGroup>

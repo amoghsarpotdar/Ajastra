@@ -11,10 +11,42 @@
 #include "MakeMove.h"
 #include "Move.h"
 #include "MoveGenerator.h"
+#include "Perft.h"
 
 
 int main(){
 
+	Init _initializer;
+	Board theboard;
+	BitboardProcessor bitboardProcessor;
+	S_BOARD board[1] = {};
+	/*Move mv;
+	MakeMove mkv;
+	MoveGenerator movegenerator;*/
+	Perft perfTest;
+	
+
+	_initializer.AllInit();
+	theboard.ParseFen(START_FEN, board);
+	theboard.PrintBoard(board);
+
+	//S_MOVELIST movelist[1];
+	theboard.ParseFen(START_FEN, board);
+	perfTest.ExecPerfTest(1, board, theboard, bitboardProcessor);
+
+}
+
+
+
+
+
+
+/**************************TESTS***********************************/
+/*
+ *
+
+void VerifyMoveGeneration()
+{
 	Init _initializer;
 	Board theboard;
 	BitboardProcessor bitboardProcessor;
@@ -31,11 +63,11 @@ int main(){
 	movegenerator.GenerateAllMoves(board, bitboardProcessor, movelist, theboard);
 	mv.PrintMoveList(movelist);
 
-	getchar();
+	int keyPressed = getchar();
 
 	int move = 0;
 	bool skip = false;
-	for(int moveNum=0; moveNum < movelist->count; ++moveNum)
+	for (int moveNum = 0; moveNum < movelist->count; ++moveNum)
 	{
 		move = movelist->moves[moveNum].move;
 		if (!mkv.MakeMoveOnBoard(board, move, bitboardProcessor, theboard))
@@ -47,21 +79,13 @@ int main(){
 		printf("\nMADE: %s\n", mv.PrintMove(move));
 		theboard.PrintBoard(board);
 
-		mkv.ReverseMoveOnBoard(board,bitboardProcessor, theboard);
+		mkv.ReverseMoveOnBoard(board, bitboardProcessor, theboard);
 		printf("\nTAKEN: %s\n", mv.PrintMove(move));
 		theboard.PrintBoard(board);
 
-		getchar();
+		keyPressed = getchar();
 	}
-
 }
-
-
-
-
-/**************************TESTS***********************************/
-/*
- *
 
 void TestCastlingMoveGeneration2()
 {
