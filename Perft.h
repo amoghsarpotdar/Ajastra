@@ -14,6 +14,8 @@ private:
 	MakeMove makeMove;
 
 public:
+	void ResetState();
+	void ExecPerft(int depth, S_BOARD* pos, Board board, BitboardProcessor bitboardProc);
 	void ExecPerfTest(int depth, S_BOARD* pos, Board board, BitboardProcessor bitboardproc);
 };
 
