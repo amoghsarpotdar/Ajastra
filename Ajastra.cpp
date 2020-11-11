@@ -32,7 +32,7 @@ int main(){
 
 	//S_MOVELIST movelist[1];
 	theboard.ParseFen(START_FEN, board);
-	perfTest.ExecPerfTest(1, board, theboard, bitboardProcessor);
+	perfTest.ExecPerfTest(4, board, theboard, bitboardProcessor);
 
 }
 
